@@ -23,3 +23,12 @@
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #ffe3e3; border-radius: 10px; }
+
+/* Page Transition Animations */
+.page-fade-enter-active, .page-fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.page-fade-enter, .page-fade-leave-to /* .page-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(10px);
+}

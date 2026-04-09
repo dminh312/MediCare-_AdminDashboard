@@ -1,4 +1,4 @@
-const { adminAuth } = require('../models/firebase');
+const { adminAuth, db } = require('../models/firebase');
 
 exports.login = async (req, res) => {
     try {
@@ -27,11 +27,33 @@ exports.login = async (req, res) => {
         // Optionally verify using Admin SDK just to prove it works
         const decodedToken = await adminAuth.verifyIdToken(token);
         
+        // Fetch user from Firestore to get their role
+        let role = 'Customer Service'; // fallback
+        try {
+            const staffDoc = await db.collection('staff').doc(decodedToken.uid).get();
+            if (staffDoc.exists && staffDoc.data().role) {
+                role = staffDoc.data().role;
+            } else {
+                // Fallback: check by email if the document ID is not the Auth UID
+                const snapshot = await db.collection('staff').where('email', '==', decodedToken.email).limit(1).get();
+                if (!snapshot.empty && snapshot.docs[0].data().role) {
+                    role = snapshot.docs[0].data().role;
+                } else if (decodedToken.email === 'admin@medicare.com') {
+                    role = 'admin'; // Ultimate fallback for super admin
+                }
+            }
+        } catch (dbErr) {
+            console.error("Error fetching staff role:", dbErr);
+            if (decodedToken.email === 'admin@medicare.com') {
+                role = 'admin';
+            }
+        }
+
         // Hoặc trả về thông tin user
         res.status(200).json({ 
             success: true, 
             message: 'Đăng nhập thành công',
-            user: { uid: decodedToken.uid, email: decodedToken.email }, 
+            user: { uid: decodedToken.uid, email: decodedToken.email, role: role }, 
             token: token 
         });
     } catch (error) {

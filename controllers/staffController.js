@@ -100,3 +100,43 @@ exports.finalize = async (req, res) => {
         res.status(500).json({ success: false, message: err.message });
     }
 };
+
+exports.updateStaff = async (req, res) => {
+    const { uid } = req.params;
+    const { fullName, phoneNumber, role } = req.body;
+    try {
+        const updateData = {};
+        if (fullName !== undefined) updateData.fullName = fullName;
+        if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
+        if (role !== undefined) updateData.role = role;
+
+        await db.collection('staff').doc(uid).update(updateData);
+
+        // Map updates to Firebase Auth if needed
+        const authData = {};
+        if (fullName !== undefined) authData.displayName = fullName;
+        if (phoneNumber !== undefined) authData.phoneNumber = phoneNumber || null;
+        if (Object.keys(authData).length > 0) {
+            await adminAuth.updateUser(uid, authData);
+        }
+
+        res.json({ success: true, message: 'Staff updated successfully' });
+    } catch (err) {
+        console.error("Update staff error:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+
+exports.getStaffs = async (req, res) => {
+    try {
+        const snapshot = await db.collection('staff').orderBy('createdAt', 'desc').get();
+        const staffs = [];
+        snapshot.forEach(doc => {
+            staffs.push({ id: doc.id, ...doc.data() });
+        });
+        res.json({ success: true, staffs });
+    } catch (err) {
+        console.error("Get staffs error:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};

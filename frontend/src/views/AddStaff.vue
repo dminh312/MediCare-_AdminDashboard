@@ -1,41 +1,17 @@
 <template>
 <div class="h-full bg-background text-on-background min-h-screen">
-  <!-- SideNavBar Shell -->
-  <aside class="h-screen w-64 fixed left-0 top-0 flex flex-col border-r border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-[0_4px_16px_rgba(255,82,82,0.05)] z-50">
-    <div class="p-6">
-      <div class="text-xl font-bold tracking-tighter text-[#ff5252]">MediCare+</div>
-      <div class="text-[11px] font-bold tracking-widest text-zinc-400 uppercase mt-1">Admin Terminal</div>
-    </div>
-    <nav class="flex-1 px-3 space-y-1">
-      <router-link to="/dashboard" class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:text-[#ff5252] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors font-['Inter'] font-bold tracking-tight text-sm">
-        <span class="material-symbols-outlined">dashboard</span> Dashboard
-      </router-link>
-      <router-link to="/staff" class="flex items-center gap-3 px-4 py-3 text-[#ff5252] bg-zinc-50 dark:bg-zinc-900 font-bold border-r-4 border-[#ff5252] font-['Inter'] tracking-tight text-sm">
-        <span class="material-symbols-outlined pulse-active">badge</span> Staff Management
-      </router-link>
-      <a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:text-[#ff5252] hover:bg-zinc-50 transition-colors font-bold text-sm" href="#">
-        <span class="material-symbols-outlined">description</span> Medical Records
-      </a>
-      <a class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:text-[#ff5252] hover:bg-zinc-50 transition-colors font-bold text-sm" href="#">
-        <span class="material-symbols-outlined">inventory_2</span> Inventory
-      </a>
-    </nav>
-    <div class="p-4 mt-auto">
-        <a @click.prevent="logout" class="flex items-center gap-3 px-4 py-3 text-zinc-500 dark:text-zinc-400 hover:text-[#ff5252] hover:bg-zinc-50 transition-colors cursor-pointer font-bold text-sm" href="#">
-            <span class="material-symbols-outlined">logout</span> Log Out
-        </a>
-    </div>
-  </aside>
+
 
   <!-- TopAppBar -->
-  <header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 flex justify-between items-center px-8 h-16 border-b border-zinc-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-sm">
+  <header class="sticky top-0 w-full z-40 flex justify-between items-center px-8 h-16 border-b border-zinc-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950 dark:bg-slate-800/80/95 backdrop-blur-sm">
     <div class="flex items-center gap-4">
+
       <h1 class="font-['Inter'] font-bold text-lg text-[#ff5252]">Add Staff Member</h1>
     </div>
     <div class="flex items-center gap-6">
-      <div class="flex items-center gap-4 text-zinc-500">
+      <div class="flex items-center gap-4 text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400">
           <span class="text-xs font-bold">{{ currentUser?.email }}</span>
-          <div class="h-8 w-8 rounded-full bg-zinc-200 overflow-hidden border border-zinc-100">
+          <div class="h-8 w-8 rounded-full bg-zinc-200 overflow-hidden border border-zinc-100 dark:border-zinc-800">
               <img alt="Admin Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxK651i06tfhfjihv0DxyFskA0QBuW3FBt4rMtX8cIc2YlVnsmNXsGcQ4DyAiHw1k8NBKF46rEz1QsS80eMW4jYiIog4_IUIMb6Mu5krzZTDIVDSN9MBsIt9j34fjpTnzgcLDGEvfTVZfE14OHiWJdHHULRqCXcYpgKBAub0LX6fCSqU9loKXQ7c2ywp4q6xGB7R_KFbElenWF2JRvF3BvjvcoGJ7DC4Ov17WoNsVgTA4mxZxZ8bkTFJ-H0FQCPrI0VbgUZNBxZks"/>
           </div>
       </div>
@@ -43,9 +19,9 @@
   </header>
 
   <!-- Main Content -->
-  <main class="ml-64 pt-24 pb-12 px-8 min-h-screen">
+  <main class="py-8 px-8 min-h-screen">
     <div class="max-w-4xl mx-auto">
-      <div class="flex items-center gap-2 text-[11px] font-bold tracking-widest text-zinc-400 uppercase mb-6">
+      <div class="flex items-center gap-2 text-[11px] font-bold tracking-widest text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 uppercase mb-6">
         <span>Staff Management</span>
         <span class="material-symbols-outlined text-xs">chevron_right</span>
         <span class="text-primary">Add New Staff</span>
@@ -54,30 +30,30 @@
       <div class="grid grid-cols-12 gap-6">
         <!-- Summary / Checklist Panel -->
         <div class="col-span-12 lg:col-span-4 space-y-6">
-          <div class="p-8 rounded-lg bg-surface-container-low border border-primary/5 flex flex-col gap-4">
+          <div class="p-8 rounded-lg bg-surface-container-low dark:bg-slate-900/50 border border-primary/5 flex flex-col gap-4 opacity-0 animate-slide-up-fade" style="animation-delay: 0.1s">
             <div class="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center">
               <span class="material-symbols-outlined text-primary text-3xl pulse-active">person_add</span>
             </div>
             <div>
               <h2 class="text-xl font-bold tracking-tight text-on-background">Staff Onboarding</h2>
-              <p class="text-sm text-on-surface-variant mt-2 leading-relaxed">Fill in the details to assign duties within the MediCare network.</p>
+              <p class="text-sm text-on-surface dark:text-slate-100 mt-2 leading-relaxed">Fill in the details to assign duties within the MediCare network.</p>
             </div>
           </div>
           
-          <div class="p-6 rounded-lg bg-white shadow-sm border border-zinc-50">
-            <h3 class="text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4">Required Sections</h3>
+          <div class="p-6 rounded-lg bg-white dark:bg-slate-900 shadow-sm border border-zinc-50 dark:border-zinc-800/50 opacity-0 animate-slide-up-fade" style="animation-delay: 0.2s">
+            <h3 class="text-xs font-bold tracking-widest text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 uppercase mb-4">Required Sections</h3>
             <ul class="space-y-3">
-              <li class="flex items-center gap-3 text-sm font-medium" :class="identityComplete ? 'text-emerald-600' : 'text-zinc-400'">
+              <li class="flex items-center gap-3 text-sm font-medium" :class="identityComplete ? 'text-emerald-600' : 'text-zinc-400 dark:text-zinc-500 dark:text-zinc-400'">
                 <span class="material-symbols-outlined text-sm pulse-active" v-if="identityComplete">check_circle</span>
                 <span class="material-symbols-outlined text-sm" v-else>radio_button_unchecked</span>
                 Identity Details
               </li>
-              <li class="flex items-center gap-3 text-sm font-medium" :class="roleComplete ? 'text-emerald-600' : 'text-zinc-400'">
+              <li class="flex items-center gap-3 text-sm font-medium" :class="roleComplete ? 'text-emerald-600' : 'text-zinc-400 dark:text-zinc-500 dark:text-zinc-400'">
                 <span class="material-symbols-outlined text-sm pulse-active" v-if="roleComplete">check_circle</span>
                 <span class="material-symbols-outlined text-sm" v-else>radio_button_unchecked</span>
                 Role Assignment
               </li>
-              <li class="flex items-center gap-3 text-sm font-medium" :class="emailVerified ? 'text-emerald-600' : 'text-zinc-400'">
+              <li class="flex items-center gap-3 text-sm font-medium" :class="emailVerified ? 'text-emerald-600' : 'text-zinc-400 dark:text-zinc-500 dark:text-zinc-400'">
                 <span class="material-symbols-outlined text-sm pulse-active" v-if="emailVerified">check_circle</span>
                 <span class="material-symbols-outlined text-sm" v-else>radio_button_unchecked</span>
                 Verification
@@ -88,19 +64,19 @@
         
         <!-- Form -->
         <div class="col-span-12 lg:col-span-8">
-          <div class="bg-surface-container-lowest rounded-lg p-8 shadow-[0_4px_24px_rgba(0,0,0,0.02)] border border-zinc-50">
+          <div class="bg-surface-container-lowest dark:bg-slate-900 rounded-lg p-8 shadow-[0_4px_24px_rgba(0,0,0,0.02)] border border-zinc-50 dark:border-zinc-800/50 opacity-0 animate-slide-up-fade" style="animation-delay: 0.3s">
             <form @submit.prevent="finalizeStaff" class="space-y-8">
               
               <div class="space-y-6">
-                <h3 class="text-sm font-bold tracking-tight border-b border-zinc-100 pb-2">Personal Information</h3>
+                <h3 class="text-sm font-bold tracking-tight border-b border-zinc-100 dark:border-zinc-800 pb-2">Personal Information</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div class="space-y-2">
-                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 uppercase">Full Name</label>
-                    <input v-model="form.fullName" class="w-full bg-zinc-50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20" type="text"/>
+                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 uppercase">Full Name</label>
+                    <input v-model="form.fullName" class="w-full bg-zinc-50 dark:bg-slate-800/50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20" type="text"/>
                   </div>
                   <div class="space-y-2">
-                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 uppercase">Email Address</label>
-                    <input v-model="form.email" class="w-full bg-zinc-50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20" type="email"/>
+                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 uppercase">Email Address</label>
+                    <input v-model="form.email" class="w-full bg-zinc-50 dark:bg-slate-800/50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20" type="email"/>
                     <button v-if="form.email && !emailVerified" @click.prevent="sendVerificationEmail" class="mt-2 text-xs font-bold text-primary hover:underline">
                       <span v-if="verifyingEmail">Sending...</span>
                       <span v-else-if="verificationSent">Check Inbox & Verify</span>
@@ -109,36 +85,38 @@
                     <span v-if="emailVerified" class="text-xs font-bold text-emerald-600 block mt-2">Email Verified</span>
                   </div>
                   <div class="space-y-2">
-                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 uppercase">Phone Number</label>
-                    <input v-model="form.phoneNumber" class="w-full bg-zinc-50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20" type="tel"/>
+                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 uppercase">Phone Number</label>
+                    <input v-model="form.phoneNumber" class="w-full bg-zinc-50 dark:bg-slate-800/50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20" type="tel"/>
                   </div>
                   <div class="space-y-2">
-                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 uppercase">Staff ID (Optional)</label>
-                    <input v-model="form.staffId" class="w-full bg-zinc-50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20" type="text"/>
+                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 uppercase">Staff ID (Optional)</label>
+                    <input v-model="form.staffId" class="w-full bg-zinc-50 dark:bg-slate-800/50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20" type="text"/>
                   </div>
                 </div>
               </div>
 
               <!-- Role -->
               <div class="space-y-6">
-                <h3 class="text-sm font-bold tracking-tight border-b border-zinc-100 pb-2">Role Assignment</h3>
+                <h3 class="text-sm font-bold tracking-tight border-b border-zinc-100 dark:border-zinc-800 pb-2">Role Assignment</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div class="space-y-2">
-                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 uppercase">Professional Role</label>
-                    <select v-model="form.role" class="w-full bg-zinc-50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20">
+                    <label class="text-[11px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 uppercase">Professional Role</label>
+                    <select v-model="form.role" class="w-full bg-zinc-50 dark:bg-slate-800/50 border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20">
                       <option disabled value="">Select Role</option>
                       <option value="Customer Service">Customer Service</option>
+                      <option value="HR">HR</option>
+                      <option value="Medicine management">Medicine management</option>
                       <option value="Admin">Admin</option>
                     </select>
                   </div>
                 </div>
               </div>
 
-              <div class="flex items-center justify-end gap-4 pt-4 border-t border-zinc-100">
-                <router-link to="/staff" class="px-6 py-2.5 rounded-lg text-sm font-bold text-zinc-500 hover:bg-zinc-50 transition-colors">
+              <div class="flex items-center justify-end gap-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                <router-link to="/staff" class="px-6 py-2.5 rounded-lg text-sm font-bold text-zinc-500 hover:bg-zinc-50 dark:bg-slate-800/50 transition-colors">
                   Cancel
                 </router-link>
-                <button type="submit" :disabled="!allComplete" :class="allComplete ? 'bg-primary text-white hover:opacity-90' : 'bg-zinc-200 text-zinc-400 cursor-not-allowed'" class="px-8 py-2.5 rounded-lg text-sm font-bold transition-all">
+                <button type="submit" :disabled="!allComplete" :class="allComplete ? 'bg-primary text-white dark:text-slate-200 hover:opacity-90' : 'bg-zinc-200 text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 cursor-not-allowed'" class="px-8 py-2.5 rounded-lg text-sm font-bold transition-all">
                   {{ submitting ? 'Adding...' : 'Add Staff Member' }}
                 </button>
               </div>

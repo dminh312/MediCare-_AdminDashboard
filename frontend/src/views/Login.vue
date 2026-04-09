@@ -7,10 +7,10 @@
             <span class="text-xl font-bold tracking-tight text-red-500 dark:text-red-400">MediCare+ Admin Portal</span>
         </div>
         <div class="flex items-center gap-4">
-            <button class="text-zinc-500 dark:text-zinc-400 hover:text-red-600 transition-colors scale-95 transition-transform duration-200">
+            <button class="text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 hover:text-red-600 transition-colors scale-95 transition-transform duration-200">
                 <span class="material-symbols-outlined" data-icon="lock">lock</span>
             </button>
-            <button class="text-zinc-500 dark:text-zinc-400 hover:text-red-600 transition-colors scale-95 transition-transform duration-200">
+            <button class="text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 hover:text-red-600 transition-colors scale-95 transition-transform duration-200">
                 <span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
             </button>
         </div>
@@ -18,15 +18,15 @@
 
     <!-- Main Content: Login Canvas -->
     <main class="flex-grow flex items-center justify-center px-4 pt-20 pb-12 bg-surface">
-        <div class="relative w-full max-w-[1100px] grid md:grid-cols-2 gap-0 overflow-hidden bg-surface-container-lowest rounded-xl shadow-[0_4px_16px_rgba(255,82,82,0.05)] ring-1 ring-red-900/5">
+        <div class="relative w-full max-w-[1100px] grid md:grid-cols-2 gap-0 overflow-hidden bg-surface-container-lowest dark:bg-slate-900 rounded-xl shadow-[0_4px_16px_rgba(255,82,82,0.05)] ring-1 ring-red-900/5 dark:ring-red-500/10">
             <!-- Left Side -->
-            <div class="hidden md:flex flex-col justify-between p-12 bg-primary-container relative overflow-hidden">
+            <div class="hidden md:flex flex-col justify-between p-12 bg-primary-container relative overflow-hidden opacity-0 animate-fade-in" style="animation-delay: 0.1s">
                 <div class="absolute inset-0 z-0">
                     <img alt="Medical professional hand" class="w-full h-full object-cover mix-blend-overlay opacity-30 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAvY7mO3AvJXSjv-XD2gcFucWxNiQLQE7kzWRcrKvq4-8yyAzz1svpHUL64qr3NDaLQA56ekuU7K2cdtES7Tw0H5ta8JF-cPDVmVFIt1o6WIZobz2Du68qOmlo_zRXi8FIvLQjdGLKVIGvtwtGC6fbEWSq7hQWAQeR0aYmMjyglWOgNt1bAvYQKXJNfSZL9vf6I2ctpaG4pC6LwT_PjUabmgZaxuKr_hHKLr1DaJieevc0GF7guPkPdiR1ccsTeaTYKHoTILksOC4"/>
                 </div>
-                <div class="relative z-10">
+                <div class="relative z-10 opacity-0 animate-slide-up-fade" style="animation-delay: 0.2s">
                     <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-8">
-                        <span class="material-symbols-outlined text-white" data-icon="health_metrics">health_metrics</span>
+                        <span class="material-symbols-outlined text-white dark:text-slate-200" data-icon="health_metrics">health_metrics</span>
                     </div>
                     <h2 class="text-3xl font-bold tracking-tight text-on-primary-container leading-tight">Securing the pulse <br/>of modern healthcare.</h2>
                     <p class="mt-4 text-on-primary-container/80 max-w-sm">Access the enterprise health management suite to monitor vital systems and provider performance in real-time.</p>
@@ -35,35 +35,35 @@
             
             <!-- Right Side: Login Form -->
             <div class="p-8 md:p-16 flex flex-col justify-center">
-                <div class="mb-10">
-                    <h1 class="text-2xl font-bold tracking-tight text-on-surface mb-2">Admin Dashboard Login</h1>
-                    <p class="text-on-surface-variant text-sm">Please enter your credentials to access the secure portal.</p>
+                <div class="mb-10 opacity-0 animate-slide-up-fade" style="animation-delay: 0.2s">
+                    <h1 class="text-2xl font-bold tracking-tight text-on-surface dark:text-slate-100 mb-2">Admin Dashboard Login</h1>
+                    <p class="text-on-surface dark:text-slate-100 text-sm">Please enter your credentials to access the secure portal.</p>
                 </div>
 
                 <!-- Error Alert -->
-                <div v-if="error" class="mb-4 p-4 bg-red-50 border-l-4 border-red-500 rounded text-red-700 text-sm">
+                <div v-if="error" class="mb-4 p-4 bg-red-50 dark:bg-red-900/30 border-l-4 border-red-500 rounded text-red-700 text-sm opacity-0 animate-slide-up-fade">
                     {{ error }}
                 </div>
 
-                <form @submit.prevent="handleLogin" class="space-y-6">
+                <form @submit.prevent="handleLogin" class="space-y-6 opacity-0 animate-slide-up-fade" style="animation-delay: 0.3s">
                     <!-- Identity Field -->
                     <div class="space-y-2">
-                        <label class="text-[11px] font-bold tracking-wide uppercase text-on-surface-variant ml-1">Admin ID or Email Address</label>
+                        <label class="text-[11px] font-bold tracking-wide uppercase text-on-surface dark:text-slate-100 ml-1">Admin ID or Email Address</label>
                         <div class="relative group">
                             <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" data-icon="person">person</span>
-                            <input v-model="form.email" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface text-sm transition-all outline-none" placeholder="e.g. admin_01@medicare.com" type="email" required/>
+                            <input v-model="form.email" class="w-full pl-12 pr-4 py-4 bg-surface-container-low dark:bg-slate-900/50 border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface dark:text-slate-100 text-sm transition-all outline-none" placeholder="e.g. admin_01@medicare.com" type="email" required/>
                         </div>
                     </div>
                     
                     <!-- Password Field -->
                     <div class="space-y-2">
                         <div class="flex justify-between items-center px-1">
-                            <label class="text-[11px] font-bold tracking-wide uppercase text-on-surface-variant">Password</label>
+                            <label class="text-[11px] font-bold tracking-wide uppercase text-on-surface dark:text-slate-100">Password</label>
                             <router-link to="/forgot-password" class="text-[11px] font-bold tracking-wide uppercase text-primary hover:underline transition-all">Forgot password?</router-link>
                         </div>
                         <div class="relative group">
                             <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" data-icon="lock_open">lock_open</span>
-                            <input v-model="form.password" :type="showPassword ? 'text' : 'password'" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface text-sm transition-all outline-none" placeholder="••••••••••••" required/>
+                            <input v-model="form.password" :type="showPassword ? 'text' : 'password'" class="w-full pl-12 pr-12 py-4 bg-surface-container-low dark:bg-slate-900/50 border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface dark:text-slate-100 text-sm transition-all outline-none" placeholder="••••••••••••" required/>
                             <button @click.prevent="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline hover:text-primary transition-colors" type="button">{{ showPassword ? 'visibility_off' : 'visibility' }}</button>
                         </div>
                     </div>
@@ -73,12 +73,12 @@
                         <div class="relative flex items-center">
                             <input v-model="rememberMe" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20 focus:ring-offset-0 transition-all cursor-pointer" id="remember" type="checkbox"/>
                         </div>
-                        <label class="text-sm text-on-surface-variant cursor-pointer select-none" for="remember">Remember this device</label>
+                        <label class="text-sm text-on-surface dark:text-slate-100 cursor-pointer select-none" for="remember">Remember this device</label>
                     </div>
                     
                     <!-- CTA -->
                     <div class="pt-4">
-                        <button :disabled="isLoading" class="w-full py-4 bg-primary text-white font-bold rounded-lg shadow-[0_4px_16px_rgba(255,82,82,0.3)] hover:shadow-[0_6px_20px_rgba(255,82,82,0.4)] disabled:opacity-75 disabled:cursor-not-allowed active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+                        <button :disabled="isLoading" class="w-full py-4 bg-primary text-white dark:text-slate-200 font-bold rounded-lg shadow-[0_4px_16px_rgba(255,82,82,0.3)] hover:shadow-[0_6px_20px_rgba(255,82,82,0.4)] disabled:opacity-75 disabled:cursor-not-allowed active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
                             <span>{{ isLoading ? 'Authenticating...' : 'Login to Dashboard' }}</span>
                             <span v-if="!isLoading" class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
                         </button>
@@ -86,9 +86,9 @@
                 </form>
                 
                 <!-- Help Footer -->
-                <div class="mt-12 flex items-start gap-3 p-4 bg-surface-container rounded-lg border-l-4 border-primary">
+                <div class="mt-12 flex items-start gap-3 p-4 bg-surface-container rounded-lg border-l-4 border-primary opacity-0 animate-slide-up-fade" style="animation-delay: 0.4s">
                     <span class="material-symbols-outlined text-primary text-xl" data-icon="verified_user">verified_user</span>
-                    <p class="text-[13px] leading-relaxed text-on-surface-variant">
+                    <p class="text-[13px] leading-relaxed text-on-surface dark:text-slate-100">
                         This is a secure enterprise system. All access attempts are logged and monitored. Support is available 24/7 for authorized personnel.
                     </p>
                 </div>
@@ -97,8 +97,8 @@
     </main>
     
     <!-- Footer -->
-    <footer class="w-full py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800">
-        <div class="text-zinc-400 dark:text-zinc-500 font-['Inter'] text-[11px] font-bold tracking-wide uppercase">
+    <footer class="w-full py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4 bg-zinc-50 dark:bg-zinc-950 dark:bg-slate-800/80 border-t border-zinc-200 dark:border-zinc-800">
+        <div class="text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 font-['Inter'] text-[11px] font-bold tracking-wide uppercase">
             © 2024 MediCare+ Health System. Secured with Enterprise Grade Encryption.
         </div>
         <div class="flex gap-6">
@@ -112,6 +112,9 @@
 </template>
 
 <script>
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
 export default {
         
         data() {
@@ -148,6 +151,13 @@ export default {
                     const result = await response.json();
                     
                     if (response.ok && result.success) {
+                        try {
+                            // Authenticate the frontend Firebase Web SDK to permit Firestore reads/writes
+                            await signInWithEmailAndPassword(auth, this.form.email, this.form.password);
+                        } catch (firebaseErr) {
+                            console.error("Firebase auth failed:", firebaseErr);
+                        }
+                        
                         // Store the JWT token for future requests
                         localStorage.setItem('medicare_admin_token', result.token);
                         localStorage.setItem('medicare_admin_user', JSON.stringify(result.user));

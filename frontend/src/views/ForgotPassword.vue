@@ -1,5 +1,5 @@
 <template>
-<div class="bg-background text-on-surface min-h-screen flex flex-col">
+<div class="bg-background text-on-surface dark:text-slate-100 min-h-screen flex flex-col">
   <!-- TopAppBar -->
   <header class="bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm docked full-width top-0 sticky z-50 border-b border-red-900/5 dark:border-red-400/10 shadow-[0_2px_8px_rgba(255,82,82,0.05)]">
     <div class="flex justify-between items-center w-full px-8 py-4">
@@ -7,7 +7,7 @@
         <span class="text-xl font-bold tracking-tighter text-red-500 dark:text-red-400">MediCare+</span>
       </div>
       <div class="flex items-center gap-4">
-        <button class="text-slate-600 dark:text-slate-400 font-medium hover:text-red-500 hover:text-red-300 transition-colors duration-200 active:scale-95 transition-transform duration-150">
+        <button class="text-slate-600 dark:text-slate-400 dark:text-slate-400 font-medium hover:text-red-500 hover:text-red-300 transition-colors duration-200 active:scale-95 transition-transform duration-150">
           <span class="material-symbols-outlined align-middle">help_outline</span>
         </button>
       </div>
@@ -24,27 +24,27 @@
 
     <div class="w-full max-w-md">
       <!-- Card -->
-      <div class="bg-surface-container-lowest rounded-lg p-8 md:p-10 shadow-[0_4px_24px_rgba(255,82,82,0.04)] ring-1 ring-red-900/5">
+      <div class="bg-surface-container-lowest dark:bg-slate-900 rounded-lg p-8 md:p-10 shadow-[0_4px_24px_rgba(255,82,82,0.04)] ring-1 ring-red-900/5 dark:ring-red-500/10">
         <div class="mb-10 text-center">
           <div class="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center mx-auto mb-6">
             <span class="material-symbols-outlined text-primary text-3xl">lock_reset</span>
           </div>
-          <h1 class="text-2xl font-bold tracking-tight text-on-surface mb-3">Reset Admin Password</h1>
-          <p class="text-on-surface-variant text-sm leading-relaxed max-w-[280px] mx-auto">
+          <h1 class="text-2xl font-bold tracking-tight text-on-surface dark:text-slate-100 mb-3">Reset Admin Password</h1>
+          <p class="text-on-surface dark:text-slate-100 text-sm leading-relaxed max-w-[280px] mx-auto">
             Enter your registered email address and we'll send you a link to reset your password.
           </p>
         </div>
 
         <form class="space-y-6" @submit.prevent="handleReset">
           <div class="space-y-2">
-            <label class="block text-[11px] font-bold uppercase tracking-widest text-on-surface-variant px-1" for="admin_email">
+            <label class="block text-[11px] font-bold uppercase tracking-widest text-on-surface dark:text-slate-100 px-1" for="admin_email">
               Admin Email
             </label>
             <div class="relative group">
               <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <span class="material-symbols-outlined text-outline text-lg group-focus-within:text-primary transition-colors">mail</span>
               </div>
-              <input v-model="email" class="block w-full pl-11 pr-4 py-3.5 bg-surface-container-low border-0 rounded-lg text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary/20 transition-all duration-200" id="admin_email" type="email" placeholder="e.g. admin@medicareplus.com" required />
+              <input v-model="email" class="block w-full pl-11 pr-4 py-3.5 bg-surface-container-low dark:bg-slate-900/50 border-0 rounded-lg text-on-surface dark:text-slate-100 placeholder:text-outline/60 focus:ring-2 focus:ring-primary/20 transition-all duration-200" id="admin_email" type="email" placeholder="e.g. admin@medicareplus.com" required />
             </div>
           </div>
           
@@ -58,7 +58,7 @@
         </form>
 
         <div class="mt-8 pt-8 border-t border-surface-variant/30 text-center">
-          <router-link to="/login" class="inline-flex items-center gap-2 text-sm font-bold text-on-surface-variant hover:text-primary transition-colors group">
+          <router-link to="/login" class="inline-flex items-center gap-2 text-sm font-bold text-on-surface dark:text-slate-100 hover:text-primary transition-colors group">
             <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
             Back to Login
           </router-link>
@@ -66,7 +66,7 @@
       </div>
 
       <div class="mt-8 text-center px-4">
-        <p class="text-xs text-on-surface-variant/60">
+        <p class="text-xs text-on-surface dark:text-slate-100/60">
           Having trouble? Contact the system administrator at <br/>
           <span class="text-primary font-medium">it-support@medicareplus.com</span>
         </p>
@@ -89,7 +89,7 @@
         </div>
 
         <!-- Central Confirmation Card -->
-        <div class="bg-surface-container-lowest rounded-xl shadow-[0_1px_2px_rgba(255,82,82,0.05)] overflow-hidden ring-1 ring-red-900/5">
+        <div class="bg-surface-container-lowest dark:bg-slate-900 rounded-xl shadow-[0_1px_2px_rgba(255,82,82,0.05)] overflow-hidden ring-1 ring-red-900/5 dark:ring-red-500/10">
             <div class="p-8 md:p-12 text-center">
                 
                 <!-- Success Anchor Icon -->
@@ -102,12 +102,12 @@
                 </div>
 
                 <!-- Editorial Headline -->
-                <h1 class="text-2xl font-bold tracking-tight text-on-surface mb-4">
+                <h1 class="text-2xl font-bold tracking-tight text-on-surface dark:text-slate-100 mb-4">
                     Check Your Email
                 </h1>
 
                 <!-- Body Copy -->
-                <p class="text-on-surface-variant leading-relaxed text-sm md:text-base px-2 mb-10">
+                <p class="text-on-surface dark:text-slate-100 leading-relaxed text-sm md:text-base px-2 mb-10">
                     We've sent a password reset link to your administrator email address. Please follow the instructions in the email to reset your password.
                 </p>
 
@@ -134,7 +134,7 @@
 
         <!-- Footer / Support -->
         <footer class="mt-8 text-center">
-            <p class="text-on-surface-variant text-[11px] font-bold tracking-widest uppercase opacity-60">
+            <p class="text-on-surface dark:text-slate-100 text-[11px] font-bold tracking-widest uppercase opacity-60">
                 © 2024 MediCare+ Admin Portal
             </p>
         </footer>
@@ -142,12 +142,12 @@
   </main>
 
   <!-- Footer (only shown on the form view usually, but keeping it visible for the page design) -->
-  <footer v-if="!isSent" class="bg-slate-50 dark:bg-slate-950 full-width py-12 border-t border-slate-200 dark:border-slate-800 mt-auto">
+  <footer v-if="!isSent" class="bg-slate-50 dark:bg-slate-900/50 dark:bg-slate-950 full-width py-12 border-t border-slate-200 dark:border-slate-800 mt-auto">
     <div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-8 gap-4">
       <div class="text-sm font-bold text-slate-900 dark:text-slate-100">
         MediCare+ Admin Portal
       </div>
-      <div class="font-['Inter'] text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+      <div class="font-['Inter'] text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 dark:text-slate-400">
         © 2024 MediCare+ Admin Portal. All rights reserved.
       </div>
       <div class="flex gap-6">

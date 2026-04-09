@@ -8,13 +8,17 @@ import ForgotPassword from '../views/ForgotPassword.vue';
 
 Vue.use(VueRouter);
 
+import LivechatSupport from '../views/LivechatSupport.vue';
+
 const routes = [
   { path: '/', redirect: '/dashboard' },
   { path: '/login', component: Login, meta: { public: true } },
   { path: '/forgot-password', component: ForgotPassword, meta: { public: true } },
-  { path: '/dashboard', component: Dashboard },
-  { path: '/staff', component: Staff },
-  { path: '/staff/add', component: AddStaff },
+  { path: '/dashboard', component: Dashboard }, // All roles can access Dashboard
+  { path: '/staff', component: Staff, meta: { roles: ['Admin', 'HR'] } },
+  { path: '/staff/add', component: AddStaff, meta: { roles: ['Admin', 'HR'] } },
+  { path: '/medicine/add', component: () => import('../views/AddMedicine.vue'), meta: { roles: ['Admin', 'Medicine management'] } },
+  { path: '/chat', component: LivechatSupport, meta: { roles: ['Admin', 'HR', 'Customer Service'] } },
 ];
 
 const router = new VueRouter({
@@ -22,14 +26,29 @@ const router = new VueRouter({
   routes
 });
 
-// Navigation guard to check for auth token
+// Navigation guard to check for auth token and role
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('medicare_admin_token');
+  const userStr = localStorage.getItem('medicare_admin_user');
+  let userRole = null;
+  
+  if (userStr) {
+      try {
+          userRole = JSON.parse(userStr).role || 'Customer Service';
+      } catch (e) {}
+  }
+
   if (!to.meta.public && !token) {
     next('/login');
   } else if (to.path === '/login' && token) {
     next('/dashboard');
   } else {
+    if (to.meta.roles && userRole) {
+      const userRoleLower = userRole.toLowerCase();
+      if (userRoleLower !== 'admin' && !to.meta.roles.some(r => r.toLowerCase() === userRoleLower)) {
+        return next('/dashboard');
+      }
+    }
     next();
   }
 });
