@@ -19,7 +19,7 @@ export default new Vuex.Store({
     chats: {},         // all chats by ID
     unreadCount: 0,
     isConnected: false,
-    theme: localStorage.getItem('theme_preference') || 'auto'
+    theme: localStorage.getItem('theme_preference') || 'light'
   },
   mutations: {
     SET_CONNECTED(state, status) {
