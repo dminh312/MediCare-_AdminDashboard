@@ -107,6 +107,7 @@
                       <option value="HR">HR</option>
                       <option value="Medicine management">Medicine management</option>
                       <option value="Admin">Admin</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                 </div>

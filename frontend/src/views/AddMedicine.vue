@@ -28,8 +28,8 @@
         <div class="max-w-4xl mx-auto">
             <!-- Header Section -->
             <div class="mb-10">
-                <h2 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white dark:text-slate-200 mb-1">Add New Medicine</h2>
-                <p class="text-slate-500 dark:text-slate-400 dark:text-slate-400 text-sm">Enter the details of the new medication to add it to the inventory.</p>
+                <h2 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white dark:text-slate-200 mb-1">{{ isEditing ? 'Edit Medicine' : 'Add New Medicine' }}</h2>
+                <p class="text-slate-500 dark:text-slate-400 dark:text-slate-400 text-sm">{{ isEditing ? 'Update the details of this medication.' : 'Enter the details of the new medication to add it to the inventory.' }}</p>
             </div>
 
             <!-- Form Card -->
@@ -55,11 +55,11 @@
 
                     <!-- Actions -->
                     <div class="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-4">
-                        <button type="button" @click="$router.push('/dashboard')" class="px-6 py-3 text-sm font-bold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+                        <button type="button" @click="cancelEdit" class="px-6 py-3 text-sm font-bold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
                             Cancel
                         </button>
                         <button type="submit" :disabled="isSaving" class="bg-[#ff5252] text-white dark:text-slate-200 px-6 py-3 rounded-lg text-sm font-bold shadow-md shadow-[#ff5252]/20 hover:bg-red-600 active:scale-95 transition-all disabled:opacity-50">
-                            {{ isSaving ? 'Saving...' : 'Save Medicine' }}
+                            {{ isSaving ? 'Saving...' : (isEditing ? 'Update Medicine' : 'Save Medicine') }}
                         </button>
                     </div>
                 </form>
@@ -95,11 +95,21 @@
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="text-[10px] font-semibold text-slate-400 dark:text-slate-300 px-2 py-0.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">{{ med.searchName || med.name.toLowerCase() }}</span>
                         </div>
-                        <div class="flex items-center gap-2 text-slate-400 dark:text-slate-500">
-                            <span class="material-symbols-outlined text-xs">calendar_today</span>
-                            <span class="text-[11px] font-medium uppercase tracking-wide">
-                                Added <span v-if="med.createdAt">{{ new Date(med.createdAt).toLocaleDateString() }}</span>
-                            </span>
+                        <div class="flex items-center gap-2 text-slate-400 dark:text-slate-500 justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-xs">calendar_today</span>
+                                <span class="text-[11px] font-medium uppercase tracking-wide">
+                                    Added <span v-if="med.createdAt">{{ new Date(med.createdAt).toLocaleDateString() }}</span>
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button @click.stop="editMedicine(med)" class="p-1.5 text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined text-[16px]">edit</span>
+                                </button>
+                                <button @click.stop="deleteMedicine(med.id)" class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined text-[16px]">delete</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -115,11 +125,13 @@ export default {
     data() {
         return {
             form: {
+                id: null,
                 name: ''
             },
             medicines: [],
             isSaving: false,
-            isFetching: false
+            isFetching: false,
+            isEditing: false
         }
     },
     mounted() {
@@ -147,8 +159,12 @@ export default {
         async saveMedicine() {
             this.isSaving = true;
             try {
-                const res = await fetch('/api/medicines', {
-                    method: 'POST',
+                const isUpdate = this.isEditing;
+                const endpoint = isUpdate ? `/api/medicines/${this.form.id}` : '/api/medicines';
+                const method = isUpdate ? 'PUT' : 'POST';
+
+                const res = await fetch(endpoint, {
+                    method: method,
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem('medicare_admin_token')}`
@@ -158,6 +174,8 @@ export default {
                 const data = await res.json();
                 if (res.ok && data.success) {
                     this.form.name = '';
+                    this.form.id = null;
+                    this.isEditing = false;
                     await this.fetchMedicines(); // Cập nhật lại list sau khi save
                 } else {
                     alert(data.message || 'Error saving medicine');
@@ -168,6 +186,37 @@ export default {
             } finally {
                 this.isSaving = false;
             }
+        },
+        editMedicine(med) {
+            this.form.id = med.id;
+            this.form.name = med.name;
+            this.isEditing = true;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        async deleteMedicine(id) {
+            if (!confirm('Are you sure you want to delete this medicine?')) return;
+            try {
+                const res = await fetch(`/api/medicines/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('medicare_admin_token')}`
+                    }
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    await this.fetchMedicines();
+                } else {
+                    alert(data.message || 'Error deleting medicine');
+                }
+            } catch (err) {
+                console.error("Failed to delete medicine", err);
+                alert('Error connecting to server');
+            }
+        },
+        cancelEdit() {
+            this.form.name = '';
+            this.form.id = null;
+            this.isEditing = false;
         }
     }
 }

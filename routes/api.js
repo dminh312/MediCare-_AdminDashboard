@@ -22,5 +22,7 @@ router.put('/staff/:uid', staffController.updateStaff);
 // Medicine API endpoints
 router.get('/medicines', medicineController.getMedicines);
 router.post('/medicines', medicineController.addMedicine);
+router.put('/medicines/:id', medicineController.updateMedicine);
+router.delete('/medicines/:id', medicineController.deleteMedicine);
 
 module.exports = router;

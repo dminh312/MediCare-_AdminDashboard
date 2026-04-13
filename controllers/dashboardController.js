@@ -2,13 +2,30 @@ const { db } = require('../models/firebase');
 
 exports.getStats = async (req, res) => {
     try {
-        // Total Patients (dummy fallback if collection empty)
-        let totalPatients = 24892;
+        // Total Patients and Monthly Registrations
+        let totalPatients = 0;
+        let monthlyRegistrations = new Array(12).fill(0);
         try {
-            const patientsSnap = await db.collection('patients').get();
+            const patientsSnap = await db.collection('users').where('role', '==', 'user').get();
             if (patientsSnap.size > 0) {
                 totalPatients = patientsSnap.size;
             }
+            
+            const currentYear = new Date().getFullYear();
+            patientsSnap.forEach(doc => {
+                const data = doc.data();
+                if (data.createdAt) {
+                    let date;
+                    if (data.createdAt.toDate) {
+                        date = data.createdAt.toDate();
+                    } else {
+                        date = new Date(data.createdAt);
+                    }
+                    if (!isNaN(date.getTime()) && date.getFullYear() === currentYear) {
+                        monthlyRegistrations[date.getMonth()] += 1;
+                    }
+                }
+            });
         } catch (e) {
             console.warn("Failed to get patients", e);
         }
@@ -16,9 +33,7 @@ exports.getStats = async (req, res) => {
         // Staff stats & distribution
         let totalStaff = 0;
         let staffDistribution = {
-            Emergency: 0,
-            Cardiology: 0,
-            General: 0,
+            Admin: 0,
             Other: 0
         };
 
@@ -29,9 +44,7 @@ exports.getStats = async (req, res) => {
             staffSnap.forEach(doc => {
                 const data = doc.data();
                 const role = data.role ? data.role.toLowerCase() : '';
-                if (role.includes('admin')) staffDistribution.Emergency += 1;
-                else if (role.includes('doctor')) staffDistribution.Cardiology += 1;
-                else if (role.includes('nurse')) staffDistribution.General += 1;
+                if (role.includes('admin')) staffDistribution.Admin += 1;
                 else staffDistribution.Other += 1;
             });
         } catch (e) {
@@ -39,7 +52,7 @@ exports.getStats = async (req, res) => {
         }
 
         // Active Support Chats
-        let activeChats = 186;
+        let activeChats = 0;
         try {
             const chatsSnap = await db.collection('support_chats').get();
             if (chatsSnap.size > 0) {
@@ -53,10 +66,11 @@ exports.getStats = async (req, res) => {
             success: true,
             stats: {
                 totalPatients,
-                staffOnline: totalStaff > 0 ? totalStaff : 158,
+                staffOnline: totalStaff, // or whatever real online metric you want
                 totalStaff: totalStaff,
                 activeChats,
-                staffDistribution
+                staffDistribution,
+                monthlyRegistrations
             }
         });
     } catch (err) {

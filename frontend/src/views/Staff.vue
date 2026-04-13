@@ -49,8 +49,6 @@
                         <div class="flex gap-3">
                             <select class="bg-surface-containerest dark:bg-slate-900 border-none text-xs font-bold rounded-lg px-4 py-2 ring-1 ring-red-900/5 dark:ring-red-500/10 focus:ring-primary/20">
                                 <option>All Roles</option>
-                                <option>Doctor</option>
-                                <option>Nurse</option>
                                 <option>Admin</option>
                             </select>
                         </div>
@@ -131,8 +129,7 @@
                         <div class="relative h-40 w-40 mx-auto mb-6 flex items-center justify-center">
                             <svg class="w-full h-full transform -rotate-90">
                                 <circle class="text-slate-200" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
-                                <circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" :stroke-dashoffset="((totalStaff - doctorsCount) / (totalStaff || 1)) * 440" stroke-width="12"></circle>
-                                <circle class="text-secondary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" :stroke-dashoffset="((totalStaff - doctorsCount - nursesCount) / (totalStaff || 1)) * 440" stroke-width="12"></circle>
+                                <circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" :stroke-dashoffset="((totalStaff - adminsCount) / (totalStaff || 1)) * 440" stroke-width="12"></circle>
                             </svg>
                             <div class="absolute inset-0 flex flex-col items-center justify-center">
                                 <span class="text-2xl font-black text-on-surface dark:text-slate-100">{{ totalStaff }}</span>
@@ -143,37 +140,21 @@
                             <li class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
                                     <div class="h-2 w-2 rounded-full bg-primary"></div>
-                                    <span class="text-xs font-bold text-on-surface dark:text-slate-100">Doctors</span>
-                                </div>
-                                <span class="text-xs font-black text-slate-500">{{ doctorsCount }}</span>
-                            </li>
-                            <li class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <div class="h-2 w-2 rounded-full bg-secondary"></div>
-                                    <span class="text-xs font-bold text-on-surface dark:text-slate-100">Nurses</span>
-                                </div>
-                                <span class="text-xs font-black text-slate-500">{{ nursesCount }}</span>
-                            </li>
-                            <li class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <div class="h-2 w-2 rounded-full bg-slate-300"></div>
                                     <span class="text-xs font-bold text-on-surface dark:text-slate-100">Admin</span>
                                 </div>
                                 <span class="text-xs font-black text-slate-500">{{ adminsCount }}</span>
                             </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="h-2 w-2 rounded-full bg-slate-300"></div>
+                                    <span class="text-xs font-bold text-on-surface dark:text-slate-100">Other</span>
+                                </div>
+                                <span class="text-xs font-black text-slate-500">{{ totalStaff - adminsCount }}</span>
+                            </li>
                         </ul>
                     </div>
 
-                    <!-- Shift Overview Card -->
-                    <div class="bg-primary rounded-2xl p-6 text-on-primary shadow-lg shadow-red-500/20 relative overflow-hidden opacity-0 animate-slide-up-fade" style="animation-delay: 0.2s">
-                        <div class="absolute top-0 right-0 p-4 opacity-20">
-                            <span class="material-symbols-outlined text-6xl">clinical_notes</span>
-                        </div>
-                        <h3 class="text-xs font-black uppercase tracking-[0.2em] mb-4">Active Now</h3>
-                        <div class="text-3xl font-black mb-1">84</div>
-                        <p class="text-[11px] opacity-80 mb-6 font-medium">Medical staff currently on shift.</p>
-
-                    </div>
+                    <!-- Active Now Card Removed -->
                 </div>
             </div>
         </div>
@@ -196,9 +177,8 @@
                         <option value="Customer Service">Customer Service</option>
                         <option value="HR">HR</option>
                         <option value="Medicine management">Medicine management</option>
-                        <option value="Doctor">Doctor</option>
-                        <option value="Nurse">Nurse</option>
                         <option value="Admin">Admin</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div>
@@ -235,9 +215,7 @@ export default {
         },
         computed: {
             totalStaff() { return this.staffs.length; },
-            doctorsCount() { return this.staffs.filter((s) => s.role === 'Doctor').length; },
-            nursesCount() { return this.staffs.filter((s) => s.role === 'Nurse').length; },
-            adminsCount() { return this.staffs.filter((s) => s.role === 'Admin').length; }
+            adminsCount() { return this.staffs.filter((s) => s.role && s.role.toLowerCase().includes('admin')).length; }
         },
         created() {
             const token = localStorage.getItem('medicare_admin_token');

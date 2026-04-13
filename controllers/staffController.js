@@ -81,8 +81,7 @@ exports.finalize = async (req, res) => {
         await adminAuth.setCustomUserClaims(user.uid, { admin: role === 'Admin' });
 
         await adminAuth.updateUser(user.uid, {
-            displayName: fullName,
-            phoneNumber: phoneNumber || null
+            displayName: fullName
         });
 
         await db.collection('staff').doc(user.uid).set({
@@ -115,7 +114,6 @@ exports.updateStaff = async (req, res) => {
         // Map updates to Firebase Auth if needed
         const authData = {};
         if (fullName !== undefined) authData.displayName = fullName;
-        if (phoneNumber !== undefined) authData.phoneNumber = phoneNumber || null;
         if (Object.keys(authData).length > 0) {
             await adminAuth.updateUser(uid, authData);
         }
@@ -129,11 +127,19 @@ exports.updateStaff = async (req, res) => {
 
 exports.getStaffs = async (req, res) => {
     try {
-        const snapshot = await db.collection('staff').orderBy('createdAt', 'desc').get();
-        const staffs = [];
+        const snapshot = await db.collection('staff').get();
+        let staffs = [];
         snapshot.forEach(doc => {
             staffs.push({ id: doc.id, ...doc.data() });
         });
+        
+        // Sort manually by createdAt descending
+        staffs.sort((a, b) => {
+            const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+            const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+            return dateB - dateA;
+        });
+
         res.json({ success: true, staffs });
     } catch (err) {
         console.error("Get staffs error:", err);
