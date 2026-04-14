@@ -32,7 +32,7 @@
                     <thead>
                         <tr class="text-zinc-400 dark:text-zinc-500 text-[11px] uppercase tracking-widest font-black border-b border-zinc-100 dark:border-zinc-800/50">
                             <th class="py-4 pl-4 font-bold">User</th>
-                            <th class="py-4 font-bold">Role</th>
+                            <th class="py-4 font-bold">UID</th>
                             <th class="py-4 font-bold">Status</th>
                             <th class="py-4 font-bold text-right pr-4">Actions</th>
                         </tr>
@@ -62,13 +62,8 @@
                             </td>
                             
                             <td class="py-4">
-                                <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest"
-                                      :class="{
-                                          'bg-red-50 text-primary dark:bg-red-900/30': user.role === 'Admin',
-                                          'bg-blue-50 text-blue-600 dark:bg-blue-900/30': user.role === 'HR',
-                                          'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300': user.role === 'Customer Service'
-                                      }">
-                                    {{ user.role }}
+                                <span class="px-2 py-1 rounded-md text-[10px] bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400 font-mono tracking-tight">
+                                    {{ user.id || user.uid }}
                                 </span>
                             </td>
 
