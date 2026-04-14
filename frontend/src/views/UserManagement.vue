@@ -3,13 +3,9 @@
     <main class="min-h-screen p-8 space-y-8 animate-slide-up-fade">
         <header class="w-full flex items-center justify-between mb-8">
             <div>
-                <h1 class="text-3xl font-black tracking-tight text-on-surface dark:text-slate-100 mb-1">User Management</h1>
-                <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Manage administrators, HR staff, and users.</p>
+                <h1 class="text-3xl font-black tracking-tight text-on-surface dark:text-slate-100 mb-1">User Management (Patients)</h1>
+                <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">View and manage registered patients on the platform.</p>
             </div>
-            <button class="bg-gradient-to-br from-primary to-[#d8363a] text-white px-6 py-3 rounded-2xl shadow-lg shadow-red-500/20 hover:shadow-xl hover:scale-105 transition-all duration-300 font-bold flex items-center gap-2">
-                <span class="material-symbols-outlined text-[20px]">person_add</span>
-                <span>Add User</span>
-            </button>
         </header>
 
         <section class="bg-surface-container-lowest dark:bg-slate-900 rounded-3xl shadow-sm border border-red-500/5 dark:border-red-500/10 overflow-hidden backdrop-blur-2xl bg-white/80 dark:bg-slate-900/80 p-8 pt-6">
@@ -17,13 +13,12 @@
             <div class="flex flex-col sm:flex-row justify-between mb-6 gap-4">
                 <div class="relative w-full max-w-md">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">search</span>
-                    <input type="text" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-red-500/20 transition-all font-medium placeholder:text-zinc-500 dark:text-zinc-400 text-on-surface dark:text-slate-100 outline-none" placeholder="Search users by name or email...">
+                    <input type="text" v-model="searchQuery" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-red-500/20 transition-all font-medium placeholder:text-zinc-500 dark:text-zinc-400 text-on-surface dark:text-slate-100 outline-none" placeholder="Search patients by name or email...">
                 </div>
                 <!-- Filters -->
                 <div class="flex gap-2">
-                    <button class="px-4 py-2 text-xs font-bold bg-primary-container text-primary rounded-xl hover:bg-primary hover:text-white transition-colors duration-300">All Users</button>
-                    <button class="px-4 py-2 text-xs font-bold bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors duration-300">Admins</button>
-                    <button class="px-4 py-2 text-xs font-bold bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors duration-300">HR</button>
+                    <button class="px-4 py-2 text-xs font-bold bg-primary-container text-primary rounded-xl hover:bg-primary hover:text-white transition-colors duration-300">All Patients</button>
+                    <button class="px-4 py-2 text-xs font-bold bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors duration-300">Active</button>
                 </div>
             </div>
 
@@ -39,9 +34,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(user, index) in mockUsers" :key="user.id" 
+                        <!-- Loading Indicator -->
+                        <tr v-if="isLoading">
+                            <td colspan="4" class="py-8 text-center text-zinc-400 font-medium">Loading patients...</td>
+                        </tr>
+                        <tr v-else-if="filteredUsers.length === 0">
+                            <td colspan="4" class="py-8 text-center text-zinc-400 font-medium">No patients found.</td>
+                        </tr>
+                        <tr v-for="(user, index) in filteredUsers" :key="user.id" 
                             class="group hover:bg-zinc-50 dark:hover:bg-slate-800/50 transition-colors duration-300 cursor-pointer animate-slide-up-fade"
-                            :style="{ animationDelay: `${index * 0.1}s` }">
+                            :style="{ animationDelay: `${index * 0.05}s` }">
                             
                             <td class="py-4 pl-4 rounded-l-2xl">
                                 <div class="flex items-center gap-4">
@@ -78,7 +80,7 @@
                                     <button class="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500 hover:text-primary transition-colors flex items-center justify-center active:scale-95">
                                         <span class="material-symbols-outlined text-[18px]">edit</span>
                                     </button>
-                                    <button class="w-8 h-8 rounded-full bg-red-50 text-primary hover:bg-primary hover:text-white transition-colors flex items-center justify-center shadow-sm shadow-red-500/10 active:scale-95">
+                                    <button @click.stop="deleteUser(user.id)" class="w-8 h-8 rounded-full bg-red-50 text-primary hover:bg-primary hover:text-white transition-colors flex items-center justify-center shadow-sm shadow-red-500/10 active:scale-95">
                                         <span class="material-symbols-outlined text-[18px]">delete</span>
                                     </button>
                                 </div>
@@ -99,12 +101,60 @@ export default {
     name: 'UserManagement',
     data() {
         return {
-            mockUsers: [
-                { id: 1, name: 'Dr. Sarah Pulse', email: 'sarah.pulse@medicare.com', role: 'Admin', status: 'Active' },
-                { id: 2, name: 'John Doe', email: 'john.doe@medicare.com', role: 'HR', status: 'Active' },
-                { id: 3, name: 'Alice Smith', email: 'alice.smith@medicare.com', role: 'Customer Service', status: 'Active' },
-                { id: 4, name: 'Robert King', email: 'robert.king@medicare.com', role: 'HR', status: 'Inactive' },
-            ]
+            users: [],
+            isLoading: true,
+            searchQuery: ''
+        }
+    },
+    computed: {
+        filteredUsers() {
+            if (!this.searchQuery) return this.users;
+            const query = this.searchQuery.toLowerCase();
+            return this.users.filter(u => 
+                (u.name && u.name.toLowerCase().includes(query)) || 
+                (u.email && u.email.toLowerCase().includes(query))
+            );
+        }
+    },
+    created() {
+        this.fetchUsers();
+    },
+    methods: {
+        async fetchUsers() {
+            this.isLoading = true;
+            try {
+                const token = localStorage.getItem('medicare_admin_token');
+                const res = await fetch('/api/users', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.users = data.users;
+                }
+            } catch (error) {
+                console.error("Fetch users error:", error);
+            } finally {
+                this.isLoading = false;
+            }
+        },
+        async deleteUser(uid) {
+            if (!confirm('Are you sure you want to delete this patient?')) return;
+            try {
+                const token = localStorage.getItem('medicare_admin_token');
+                const res = await fetch(`/api/users/${uid}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.users = this.users.filter(u => u.id !== uid);
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (e) {
+                console.error(e);
+                alert('An error occurred during deletion.');
+            }
         }
     }
 }

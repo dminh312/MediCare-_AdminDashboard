@@ -3,14 +3,15 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const staffController = require('../controllers/staffController');
 const medicineController = require('../controllers/medicineController');
-
-// Auth API endpoints
+const userController = require('../controllers/userController');
 const dashboardController = require('../controllers/dashboardController');
 
-router.get('/dashboard/stats', dashboardController.getStats);
-
+// Auth API endpoints
 router.post('/login', authController.login);
 router.post('/auth/reset-password', authController.resetPassword);
+
+// Dashboard API endpoints
+router.get('/dashboard/stats', dashboardController.getStats);
 
 // Staff API endpoints
 router.get('/staff', staffController.getStaffs);
@@ -24,5 +25,9 @@ router.get('/medicines', medicineController.getMedicines);
 router.post('/medicines', medicineController.addMedicine);
 router.put('/medicines/:id', medicineController.updateMedicine);
 router.delete('/medicines/:id', medicineController.deleteMedicine);
+
+// Users API endpoints
+router.get('/users', userController.getUsers);
+router.delete('/users/:uid', userController.deleteUser);
 
 module.exports = router;
