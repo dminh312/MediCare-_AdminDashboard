@@ -28,6 +28,7 @@ router.delete('/medicines/:id', medicineController.deleteMedicine);
 
 // Users API endpoints
 router.get('/users', userController.getUsers);
+router.post('/users', userController.addUser);
 router.delete('/users/:uid', userController.deleteUser);
 
 module.exports = router;

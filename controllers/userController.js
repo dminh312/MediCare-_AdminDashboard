@@ -19,8 +19,13 @@ exports.getUsers = async (req, res) => {
         
         // Sort manually by createdAt descending
         users.sort((a, b) => {
-            const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
-            const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+            let dateA = new Date(0), dateB = new Date(0);
+            if (a.createdAt) {
+                dateA = a.createdAt.toDate ? a.createdAt.toDate() : new Date(a.createdAt);
+            }
+            if (b.createdAt) {
+                dateB = b.createdAt.toDate ? b.createdAt.toDate() : new Date(b.createdAt);
+            }
             return dateB - dateA;
         });
 
@@ -36,11 +41,51 @@ exports.deleteUser = async (req, res) => {
     try {
         // Delete from Firestore
         await db.collection('users').doc(uid).delete();
-        // Delete from Firebase Auth if desired (uncomment if you want to also remove Auth accounts)
-        // await adminAuth.deleteUser(uid);
+        
+        try {
+            // Delete from Firebase Auth
+            await adminAuth.deleteUser(uid);
+        } catch (authErr) {
+            console.warn("Could not delete from Auth (might not exist):", authErr.message);
+        }
         res.json({ success: true, message: 'User deleted successfully' });
     } catch (err) {
         console.error("Delete user error:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+
+exports.addUser = async (req, res) => {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+        return res.status(400).json({ success: false, message: 'Name, email, and password are required' });
+    }
+
+    try {
+        const userRecord = await adminAuth.createUser({
+            email,
+            password,
+            displayName: name,
+        });
+
+        const newUser = {
+            uid: userRecord.uid,
+            displayName: name,
+            email,
+            role: 'user',
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            preferences: {
+                autoSyncInterval: 60,
+                healthConnectEnabled: false,
+                notificationsEnabled: true
+            }
+        };
+
+        await db.collection('users').doc(userRecord.uid).set(newUser);
+        res.json({ success: true, message: 'User created successfully', user: newUser });
+    } catch (err) {
+        console.error("Add user error:", err);
         res.status(500).json({ success: false, message: err.message });
     }
 };

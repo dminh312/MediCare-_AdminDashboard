@@ -6,6 +6,10 @@
                 <h1 class="text-3xl font-black tracking-tight text-on-surface dark:text-slate-100 mb-1">User Management (Patients)</h1>
                 <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">View and manage registered patients on the platform.</p>
             </div>
+            <button @click="showAddModal = true" class="bg-gradient-to-br from-primary to-[#d8363a] text-white px-6 py-3 rounded-2xl shadow-lg shadow-red-500/20 hover:shadow-xl hover:scale-105 transition-all duration-300 font-bold flex items-center gap-2">
+                <span class="material-symbols-outlined text-[20px]">person_add</span>
+                <span>Add Patient</span>
+            </button>
         </header>
 
         <section class="bg-surface-container-lowest dark:bg-slate-900 rounded-3xl shadow-sm border border-red-500/5 dark:border-red-500/10 overflow-hidden backdrop-blur-2xl bg-white/80 dark:bg-slate-900/80 p-8 pt-6">
@@ -90,8 +94,41 @@
                     </tbody>
                 </table>
             </div>
-
         </section>
+
+        <!-- Add User Modal -->
+        <div v-if="showAddModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm shadow-sm transition-opacity duration-300">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl w-full max-w-md overflow-hidden animate-slide-up-fade border border-red-500/5 dark:border-red-500/10">
+                <div class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-on-surface dark:text-slate-100">Add New Patient</h2>
+                    <button @click="showAddModal = false" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-1">Full Name</label>
+                        <input v-model="newUser.name" type="text" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl py-3 px-4 text-sm focus:ring-2 focus:ring-red-500/20 transition-all text-on-surface dark:text-slate-100 outline-none" placeholder="E.g. John Doe">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-1">Email Address</label>
+                        <input v-model="newUser.email" type="email" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl py-3 px-4 text-sm focus:ring-2 focus:ring-red-500/20 transition-all text-on-surface dark:text-slate-100 outline-none" placeholder="john@example.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-1">Password</label>
+                        <input v-model="newUser.password" type="password" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl py-3 px-4 text-sm focus:ring-2 focus:ring-red-500/20 transition-all text-on-surface dark:text-slate-100 outline-none" placeholder="Min 6 characters">
+                    </div>
+                </div>
+                <div class="p-6 bg-zinc-50 dark:bg-slate-800/50 flex justify-end gap-3 rounded-b-3xl">
+                    <button @click="showAddModal = false" class="px-5 py-2.5 rounded-xl text-sm font-bold text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">Cancel</button>
+                    <button @click="submitAddUser" :disabled="isSubmitting" class="bg-primary text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:shadow-md hover:bg-[#d8363a] transition-all disabled:opacity-50 flex items-center gap-2">
+                        <span v-if="isSubmitting" class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+                        <span>{{ isSubmitting ? 'Adding...' : 'Add Patient' }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
     </main>
 </div>
 </template>
@@ -103,7 +140,14 @@ export default {
         return {
             users: [],
             isLoading: true,
-            searchQuery: ''
+            searchQuery: '',
+            showAddModal: false,
+            isSubmitting: false,
+            newUser: {
+                name: '',
+                email: '',
+                password: ''
+            }
         }
     },
     computed: {
@@ -154,6 +198,37 @@ export default {
             } catch (e) {
                 console.error(e);
                 alert('An error occurred during deletion.');
+            }
+        },
+        async submitAddUser() {
+            if (!this.newUser.name || !this.newUser.email || !this.newUser.password) {
+                alert('Please fill all fields');
+                return;
+            }
+            this.isSubmitting = true;
+            try {
+                const token = localStorage.getItem('medicare_admin_token');
+                const res = await fetch('/api/users', {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.newUser)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.showAddModal = false;
+                    this.newUser = { name: '', email: '', password: '' };
+                    this.fetchUsers(); // Refresh the list
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('An error occurred while adding the patient.');
+            } finally {
+                this.isSubmitting = false;
             }
         }
     }
