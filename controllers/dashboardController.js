@@ -11,7 +11,18 @@ exports.getStats = async (req, res) => {
                 totalPatients = patientsSnap.size;
             }
             
+            let weeklyRegistrations = new Array(7).fill(0);
+
             const currentYear = new Date().getFullYear();
+            const now = new Date();
+            const startOfWeek = new Date(now);
+            const currentDayOfWeek = now.getDay() || 7; // 1(Mon) to 7(Sun)
+            startOfWeek.setDate(now.getDate() - currentDayOfWeek + 1);
+            startOfWeek.setHours(0, 0, 0, 0);
+            
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 7);
+
             patientsSnap.forEach(doc => {
                 const data = doc.data();
                 if (data.createdAt) {
@@ -23,6 +34,10 @@ exports.getStats = async (req, res) => {
                     }
                     if (!isNaN(date.getTime()) && date.getFullYear() === currentYear) {
                         monthlyRegistrations[date.getMonth()] += 1;
+                    }
+                    if (!isNaN(date.getTime()) && date >= startOfWeek && date < endOfWeek) {
+                        const dow = date.getDay() || 7;
+                        weeklyRegistrations[dow - 1] += 1;
                     }
                 }
             });
@@ -70,7 +85,8 @@ exports.getStats = async (req, res) => {
                 totalStaff: totalStaff,
                 activeChats,
                 staffDistribution,
-                monthlyRegistrations
+                monthlyRegistrations,
+                weeklyRegistrations
             }
         });
     } catch (err) {

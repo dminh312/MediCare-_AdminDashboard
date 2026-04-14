@@ -82,8 +82,8 @@
 
                         </div>
                         <div class="flex gap-2">
-                            <button class="px-3 py-1 text-[10px] font-bold bg-zinc-100 dark:bg-slate-800 rounded-full text-zinc-600 dark:text-zinc-300">Weekly</button>
-                            <button class="px-3 py-1 text-[10px] font-bold bg-primary text-white dark:text-slate-200 rounded-full">Monthly</button>
+                            <button @click="chartMode = 'Weekly'" :class="chartMode === 'Weekly' ? 'bg-primary text-white dark:text-slate-200' : 'bg-zinc-100 dark:bg-slate-800 text-zinc-600 dark:text-zinc-300'" class="px-3 py-1 text-[10px] font-bold rounded-full transition-colors">Weekly</button>
+                            <button @click="chartMode = 'Monthly'" :class="chartMode === 'Monthly' ? 'bg-primary text-white dark:text-slate-200' : 'bg-zinc-100 dark:bg-slate-800 text-zinc-600 dark:text-zinc-300'" class="px-3 py-1 text-[10px] font-bold rounded-full transition-colors">Monthly</button>
                         </div>
                     </div>
                     <div class="h-64 flex items-end gap-3 px-4 relative">
@@ -93,14 +93,14 @@
                             <div class="border-b border-zinc-100 dark:border-zinc-800 w-full h-px"></div>
                             <div class="border-b border-zinc-100 dark:border-zinc-800 w-full h-px"></div>
                         </div>
-                        <div v-for="(count, index) in monthlyData" :key="index"
-                             class="flex-1 bg-primary-container dark:bg-red-900/40 rounded-t-lg hover:bg-primary transition-colors cursor-pointer group relative"
+                        <div v-for="(count, index) in chartData" :key="index"
+                             class="flex-1 bg-primary-container dark:bg-red-900/40 rounded-t-lg hover:bg-primary transition-all duration-300 cursor-pointer group relative"
                              :style="{ height: getBarHeight(count) + '%' }">
                             <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">{{ count }}</span>
                         </div>
                     </div>
                     <div class="flex justify-between mt-4 px-4 text-[10px] font-bold text-zinc-400 dark:text-zinc-400 uppercase tracking-widest">
-                        <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+                        <span v-for="label in chartLabels" :key="label">{{ label }}</span>
                     </div>
                 </div>
 
@@ -149,9 +149,11 @@ export default {
                     staffOnline: 0,
                     activeChats: 0,
                     staffDistribution: { Admin: 0, Other: 0 },
-                    monthlyRegistrations: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    monthlyRegistrations: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    weeklyRegistrations: [0, 0, 0, 0, 0, 0, 0]
                 },
-                isLoading: false
+                isLoading: false,
+                chartMode: 'Monthly'
             }
         },
         computed: {
@@ -175,6 +177,19 @@ export default {
                 return Array.isArray(this.stats.monthlyRegistrations) 
                      ? this.stats.monthlyRegistrations 
                      : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            },
+            weeklyData() {
+                return Array.isArray(this.stats.weeklyRegistrations)
+                     ? this.stats.weeklyRegistrations
+                     : [0, 0, 0, 0, 0, 0, 0];
+            },
+            chartData() {
+                return this.chartMode === 'Weekly' ? this.weeklyData : this.monthlyData;
+            },
+            chartLabels() {
+                return this.chartMode === 'Weekly'
+                     ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                     : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             }
         },
         created() {
@@ -216,7 +231,7 @@ export default {
                 window.location.href = '/login';
             },
             getBarHeight(count) {
-                const max = Math.max(...this.monthlyData, 1); // Avoid division by zero
+                const max = Math.max(...this.chartData, 1); // Avoid division by zero
                 const pct = (count / max) * 100;
                 return Math.max(pct, 5); // Ensure at least 5% height so the bar is somewhat visible even if 0 if desired, or let it be 0. Let's make it Math.max(pct, 0), wait, if it's 0 it shouldn't show.
             }
