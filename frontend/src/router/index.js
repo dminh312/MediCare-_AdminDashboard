@@ -5,6 +5,7 @@ import Dashboard from '../views/Dashboard.vue';
 import Staff from '../views/Staff.vue';
 import AddStaff from '../views/AddStaff.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
+import UserManagement from '../views/UserManagement.vue';
 
 Vue.use(VueRouter);
 
@@ -17,6 +18,7 @@ const routes = [
   { path: '/dashboard', component: Dashboard }, // All roles can access Dashboard
   { path: '/staff', component: Staff, meta: { roles: ['Admin', 'HR'] } },
   { path: '/staff/add', component: AddStaff, meta: { roles: ['Admin', 'HR'] } },
+  { path: '/users', component: UserManagement, meta: { roles: ['Admin', 'HR'] } },
   { path: '/medicine/add', component: () => import('../views/AddMedicine.vue'), meta: { roles: ['Admin', 'Medicine management'] } },
   { path: '/chat', component: LivechatSupport, meta: { roles: ['Admin', 'HR', 'Customer Service'] } },
 ];

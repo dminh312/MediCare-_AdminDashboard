@@ -23,6 +23,15 @@
               </transition>
           </router-link>
 
+          <router-link to="/users" v-if="hasRole(['Admin', 'HR'])"
+             class="flex items-center gap-3 px-4 py-3 rounded-lg overflow-hidden transition-all duration-200"
+             :class="[$route.path.startsWith('/users') ? 'bg-white dark:bg-slate-900 border border-red-900/5 dark:border-red-500/10 shadow-sm text-[#ff5252]' : 'text-slate-500 hover:bg-white dark:bg-slate-900 hover:text-[#ff5252]']">
+              <span class="material-symbols-outlined flex-shrink-0" :class="{ 'pulse-active': $route.path.startsWith('/users')}">manage_accounts</span>
+              <transition name="fade-text">
+                 <span v-if="!isCollapsed" class="whitespace-nowrap">User Management</span>
+              </transition>
+          </router-link>
+
           <router-link to="/medicine/add" v-if="hasRole(['Medicine management'])"
              class="flex items-center gap-3 px-4 py-3 rounded-lg overflow-hidden transition-all duration-200"
              :class="[$route.path.startsWith('/medicine') ? 'bg-white dark:bg-slate-900 border border-red-900/5 dark:border-red-500/10 shadow-sm text-[#ff5252]' : 'text-slate-500 hover:bg-white dark:bg-slate-900 hover:text-[#ff5252]']">
