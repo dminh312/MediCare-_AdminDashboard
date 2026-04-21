@@ -6,7 +6,7 @@ exports.getUsers = async (req, res) => {
         let users = [];
         snapshot.forEach(doc => {
             const data = doc.data();
-            let status = 'Active'; // You can fetch real status from your design logic if available
+            let status = 'Active'; 
             users.push({ 
                 id: doc.id,
                 name: data.fullName || data.name || data.displayName || 'Unknown Patient',
@@ -17,7 +17,7 @@ exports.getUsers = async (req, res) => {
             });
         });
         
-        // Sort manually by createdAt descending
+
         users.sort((a, b) => {
             let dateA = new Date(0), dateB = new Date(0);
             if (a.createdAt) {

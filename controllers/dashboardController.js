@@ -5,13 +5,13 @@ exports.getStats = async (req, res) => {
         // Total Patients and Monthly Registrations
         let totalPatients = 0;
         let monthlyRegistrations = new Array(12).fill(0);
+        let weeklyRegistrations = new Array(7).fill(0);
         try {
             const patientsSnap = await db.collection('users').where('role', '==', 'user').get();
             if (patientsSnap.size > 0) {
                 totalPatients = patientsSnap.size;
             }
             
-            let weeklyRegistrations = new Array(7).fill(0);
 
             const currentYear = new Date().getFullYear();
             const now = new Date();

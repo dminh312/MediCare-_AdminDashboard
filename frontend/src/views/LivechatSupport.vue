@@ -100,8 +100,8 @@
                           </div>
                       </div>
                       <div class="flex gap-2">
-                          <button class="h-9 w-9 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 dark:text-slate-400 hover:text-[#ff5252] hover:bg-slate-50 dark:bg-slate-900/50 hover:border-slate-300 transition-colors shadow-sm">
-                              <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                          <button @click="deleteChat" class="h-9 w-9 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-red-500 hover:bg-red-50 hover:border-red-200 transition-colors shadow-sm" title="Delete Conversation">
+                              <span class="material-symbols-outlined text-[20px]">delete</span>
                           </button>
                       </div>
                   </div>
@@ -194,7 +194,8 @@
 import { db } from '../firebase';
 import { 
   collection, query, orderBy, onSnapshot, 
-  doc, updateDoc, writeBatch, serverTimestamp 
+  doc, updateDoc, writeBatch, serverTimestamp,
+  getDocs, deleteDoc
 } from 'firebase/firestore';
 
 export default {
@@ -245,7 +246,18 @@ export default {
         this.chats = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
-        }));
+        })).filter(chat => {
+            // Soft delete logic: hide if hiddenByAdminAt exists and is newer than lastUpdated
+            if (!chat.hiddenByAdminAt) return true;
+            
+            // If there's a new message since we hid it, it should reappear!
+            if (chat.lastUpdated && chat.hiddenByAdminAt) {
+                if (chat.lastUpdated.seconds > chat.hiddenByAdminAt.seconds) {
+                    return true;
+                }
+            }
+            return false;
+        });
         this.loadingChats = false;
       }, (error) => {
         console.error("Error fetching chats:", error);
@@ -326,6 +338,27 @@ export default {
             this.newMessage = text;
         } finally {
             this.sending = false;
+        }
+    },
+    async deleteChat() {
+        if (!this.activeChatId) return;
+        
+        if (!confirm('Are you sure you want to hide this conversation? The history will be preserved in the database.')) {
+            return;
+        }
+        
+        const chatId = this.activeChatId;
+        this.activeChatId = null;
+        
+        try {
+            // Soft delete: keep the document and messages but mark as hidden
+            await updateDoc(doc(db, 'support_chats', chatId), {
+                hiddenByAdminAt: serverTimestamp()
+            });
+            
+        } catch (error) {
+            console.error("Error hiding chat:", error);
+            alert("Failed to hide chat: " + error.message);
         }
     },
     scrollToBottom() {
