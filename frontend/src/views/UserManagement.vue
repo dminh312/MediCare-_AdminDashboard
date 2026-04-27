@@ -3,12 +3,12 @@
     <main class="min-h-screen p-8 space-y-8 animate-slide-up-fade">
         <header class="w-full flex items-center justify-between mb-8">
             <div>
-                <h1 class="text-3xl font-black tracking-tight text-on-surface dark:text-slate-100 mb-1">User Management (Patients)</h1>
-                <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">View and manage registered patients on the platform.</p>
+                <h1 class="text-3xl font-black tracking-tight text-on-surface dark:text-slate-100 mb-1">User Management</h1>
+                <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">View and manage registered users on the platform.</p>
             </div>
             <button @click="showAddModal = true" class="bg-gradient-to-br from-primary to-[#d8363a] text-white px-6 py-3 rounded-2xl shadow-lg shadow-red-500/20 hover:shadow-xl hover:scale-105 transition-all duration-300 font-bold flex items-center gap-2">
                 <span class="material-symbols-outlined text-[20px]">person_add</span>
-                <span>Add Patient</span>
+                <span>Add User</span>
             </button>
         </header>
 
@@ -17,11 +17,11 @@
             <div class="flex flex-col sm:flex-row justify-between mb-6 gap-4">
                 <div class="relative w-full max-w-md">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">search</span>
-                    <input type="text" v-model="searchQuery" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-red-500/20 transition-all font-medium placeholder:text-zinc-500 dark:text-zinc-400 text-on-surface dark:text-slate-100 outline-none" placeholder="Search patients by name or email...">
+                    <input type="text" v-model="searchQuery" class="w-full bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-red-500/20 transition-all font-medium placeholder:text-zinc-500 dark:text-zinc-400 text-on-surface dark:text-slate-100 outline-none" placeholder="Search users by name or email...">
                 </div>
                 <!-- Filters -->
                 <div class="flex gap-2">
-                    <button class="px-4 py-2 text-xs font-bold bg-primary-container text-primary rounded-xl hover:bg-primary hover:text-white transition-colors duration-300">All Patients</button>
+                    <button class="px-4 py-2 text-xs font-bold bg-primary-container text-primary rounded-xl hover:bg-primary hover:text-white transition-colors duration-300">All Users</button>
                     <button class="px-4 py-2 text-xs font-bold bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors duration-300">Active</button>
                 </div>
             </div>
@@ -40,10 +40,10 @@
                     <tbody>
                         <!-- Loading Indicator -->
                         <tr v-if="isLoading">
-                            <td colspan="4" class="py-8 text-center text-zinc-400 font-medium">Loading patients...</td>
+                            <td colspan="4" class="py-8 text-center text-zinc-400 font-medium">Loading users...</td>
                         </tr>
                         <tr v-else-if="filteredUsers.length === 0">
-                            <td colspan="4" class="py-8 text-center text-zinc-400 font-medium">No patients found.</td>
+                            <td colspan="4" class="py-8 text-center text-zinc-400 font-medium">No users found.</td>
                         </tr>
                         <tr v-for="(user, index) in filteredUsers" :key="user.id" 
                             class="group hover:bg-zinc-50 dark:hover:bg-slate-800/50 transition-colors duration-300 cursor-pointer animate-slide-up-fade"
@@ -95,7 +95,7 @@
         <div v-if="showAddModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm shadow-sm transition-opacity duration-300">
             <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl w-full max-w-md overflow-hidden animate-slide-up-fade border border-red-500/5 dark:border-red-500/10">
                 <div class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-on-surface dark:text-slate-100">Add New Patient</h2>
+                    <h2 class="text-xl font-bold text-on-surface dark:text-slate-100">Add New User</h2>
                     <button @click="showAddModal = false" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors">
                         <span class="material-symbols-outlined">close</span>
                     </button>
@@ -118,7 +118,7 @@
                     <button @click="showAddModal = false" class="px-5 py-2.5 rounded-xl text-sm font-bold text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">Cancel</button>
                     <button @click="submitAddUser" :disabled="isSubmitting" class="bg-primary text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:shadow-md hover:bg-[#d8363a] transition-all disabled:opacity-50 flex items-center gap-2">
                         <span v-if="isSubmitting" class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
-                        <span>{{ isSubmitting ? 'Adding...' : 'Add Patient' }}</span>
+                        <span>{{ isSubmitting ? 'Adding...' : 'Add User' }}</span>
                     </button>
                 </div>
             </div>
@@ -177,7 +177,7 @@ export default {
             }
         },
         async deleteUser(uid) {
-            if (!confirm('Are you sure you want to delete this patient?')) return;
+            if (!confirm('Are you sure you want to delete this user?')) return;
             try {
                 const token = localStorage.getItem('medicare_admin_token');
                 const res = await fetch(`/api/users/${uid}`, {
@@ -221,7 +221,7 @@ export default {
                 }
             } catch (err) {
                 console.error(err);
-                alert('An error occurred while adding the patient.');
+                alert('An error occurred while adding the user.');
             } finally {
                 this.isSubmitting = false;
             }

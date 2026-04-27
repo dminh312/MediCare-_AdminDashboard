@@ -102,18 +102,20 @@ exports.finalize = async (req, res) => {
 
 exports.updateStaff = async (req, res) => {
     const { uid } = req.params;
-    const { fullName, phoneNumber, role } = req.body;
+    const { fullName, phoneNumber, role, photoURL } = req.body;
     try {
         const updateData = {};
         if (fullName !== undefined) updateData.fullName = fullName;
         if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
         if (role !== undefined) updateData.role = role;
+        if (photoURL !== undefined) updateData.photoURL = photoURL;
 
         await db.collection('staff').doc(uid).update(updateData);
 
         // Map updates to Firebase Auth if needed
         const authData = {};
         if (fullName !== undefined) authData.displayName = fullName;
+        if (photoURL !== undefined) authData.photoURL = photoURL;
         if (Object.keys(authData).length > 0) {
             await adminAuth.updateUser(uid, authData);
         }

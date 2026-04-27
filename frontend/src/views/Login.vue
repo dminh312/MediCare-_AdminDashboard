@@ -2,15 +2,15 @@
 <div id="app">
 
     <!-- TopAppBar -->
-    <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm shadow-sm dark:shadow-none">
+    <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-surface/95 backdrop-blur-sm shadow-sm">
         <div class="flex items-center gap-2">
-            <span class="text-xl font-bold tracking-tight text-red-500 dark:text-red-400">MediCare+ Admin Portal</span>
+            <span class="text-xl font-bold tracking-tight text-primary">MediCare+ Admin Portal</span>
         </div>
         <div class="flex items-center gap-4">
-            <button class="text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 hover:text-red-600 transition-colors scale-95 transition-transform duration-200">
+            <button class="text-on-surface-variant hover:text-primary transition-colors scale-95 transition-transform duration-200">
                 <span class="material-symbols-outlined" data-icon="lock">lock</span>
             </button>
-            <button class="text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 hover:text-red-600 transition-colors scale-95 transition-transform duration-200">
+            <button class="text-on-surface-variant hover:text-primary transition-colors scale-95 transition-transform duration-200">
                 <span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
             </button>
         </div>
@@ -35,35 +35,35 @@
             
             <!-- Right Side: Login Form -->
             <div class="p-8 md:p-16 flex flex-col justify-center">
-                <div class="mb-10 opacity-0 animate-slide-up-fade" style="animation-delay: 0.2s">
-                    <h1 class="text-2xl font-bold tracking-tight text-on-surface dark:text-slate-100 mb-2">Admin Dashboard Login</h1>
-                    <p class="text-on-surface dark:text-slate-100 text-sm">Please enter your credentials to access the secure portal.</p>
+                <div class="mb-10 mt-6 md:mt-0 opacity-0 animate-slide-up-fade" style="animation-delay: 0.2s">
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight text-on-surface mb-2">Admin Dashboard Login</h1>
+                    <p class="text-on-surface-variant text-sm">Please enter your credentials to access the secure portal.</p>
                 </div>
 
                 <!-- Error Alert -->
-                <div v-if="error" class="mb-4 p-4 bg-red-50 dark:bg-red-900/30 border-l-4 border-red-500 rounded text-red-700 text-sm opacity-0 animate-slide-up-fade">
+                <div v-if="error" class="mb-4 p-4 bg-error-container border-l-4 border-error rounded-[8px] text-on-error-container text-sm opacity-0 animate-slide-up-fade">
                     {{ error }}
                 </div>
 
                 <form @submit.prevent="handleLogin" class="space-y-6 opacity-0 animate-slide-up-fade" style="animation-delay: 0.3s">
                     <!-- Identity Field -->
                     <div class="space-y-2">
-                        <label class="text-[11px] font-bold tracking-wide uppercase text-on-surface dark:text-slate-100 ml-1">Admin ID or Email Address</label>
+                        <label class="text-[11px] font-bold tracking-wide uppercase text-on-surface ml-1">Admin ID or Email Address</label>
                         <div class="relative group">
                             <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" data-icon="person">person</span>
-                            <input v-model="form.email" class="w-full pl-12 pr-4 py-4 bg-surface-container-low dark:bg-slate-900/50 border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface dark:text-slate-100 text-sm transition-all outline-none" placeholder="e.g. admin_01@medicare.com" type="email" required/>
+                            <input v-model="form.email" class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-[8px] focus:ring-2 focus:ring-primary/20 text-on-surface text-sm transition-all outline-none" placeholder="e.g. admin_01@medicare.com" type="email" required/>
                         </div>
                     </div>
                     
                     <!-- Password Field -->
                     <div class="space-y-2">
                         <div class="flex justify-between items-center px-1">
-                            <label class="text-[11px] font-bold tracking-wide uppercase text-on-surface dark:text-slate-100">Password</label>
+                            <label class="text-[11px] font-bold tracking-wide uppercase text-on-surface">Password</label>
                             <router-link to="/forgot-password" class="text-[11px] font-bold tracking-wide uppercase text-primary hover:underline transition-all">Forgot password?</router-link>
                         </div>
                         <div class="relative group">
                             <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" data-icon="lock_open">lock_open</span>
-                            <input v-model="form.password" :type="showPassword ? 'text' : 'password'" class="w-full pl-12 pr-12 py-4 bg-surface-container-low dark:bg-slate-900/50 border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface dark:text-slate-100 text-sm transition-all outline-none" placeholder="••••••••••••" required/>
+                            <input v-model="form.password" :type="showPassword ? 'text' : 'password'" class="w-full pl-12 pr-12 py-4 bg-surface-container-low border-none rounded-[8px] focus:ring-2 focus:ring-primary/20 text-on-surface text-sm transition-all outline-none" placeholder="••••••••••••" required/>
                             <button @click.prevent="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline hover:text-primary transition-colors" type="button">{{ showPassword ? 'visibility_off' : 'visibility' }}</button>
                         </div>
                     </div>
@@ -71,9 +71,9 @@
                     <!-- Options -->
                     <div class="flex items-center gap-3 py-2">
                         <div class="relative flex items-center">
-                            <input v-model="rememberMe" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20 focus:ring-offset-0 transition-all cursor-pointer" id="remember" type="checkbox"/>
+                            <input v-model="rememberMe" class="w-5 h-5 rounded-[4px] border-outline-variant text-primary focus:ring-primary/20 focus:ring-offset-0 transition-all cursor-pointer" id="remember" type="checkbox"/>
                         </div>
-                        <label class="text-sm text-on-surface dark:text-slate-100 cursor-pointer select-none" for="remember">Remember this device</label>
+                        <label class="text-sm text-on-surface cursor-pointer select-none" for="remember">Remember this device</label>
                     </div>
                     
                     <!-- CTA -->
@@ -97,14 +97,14 @@
     </main>
     
     <!-- Footer -->
-    <footer class="w-full py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4 bg-zinc-50 dark:bg-zinc-950 dark:bg-slate-800/80 border-t border-zinc-200 dark:border-zinc-800">
-        <div class="text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 dark:text-zinc-500 dark:text-zinc-400 font-['Inter'] text-[11px] font-bold tracking-wide uppercase">
+    <footer class="w-full py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4 bg-surface-container-low border-t border-outline-variant/30">
+        <div class="text-on-surface-variant font-['Inter'] text-[11px] font-bold tracking-wide uppercase">
             © 2024 MediCare+ Health System. Secured with Enterprise Grade Encryption.
         </div>
         <div class="flex gap-6">
-            <a class="font-['Inter'] text-[11px] font-bold tracking-wide uppercase text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-300 underline" href="#">Security Policy</a>
-            <a class="font-['Inter'] text-[11px] font-bold tracking-wide uppercase text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-300 underline" href="#">Terms of Service</a>
-            <a class="font-['Inter'] text-[11px] font-bold tracking-wide uppercase text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-300 underline" href="#">Support</a>
+            <a class="font-['Inter'] text-[11px] font-bold tracking-wide uppercase text-on-surface-variant hover:text-primary underline" href="#">Security Policy</a>
+            <a class="font-['Inter'] text-[11px] font-bold tracking-wide uppercase text-on-surface-variant hover:text-primary underline" href="#">Terms of Service</a>
+            <a class="font-['Inter'] text-[11px] font-bold tracking-wide uppercase text-on-surface-variant hover:text-primary underline" href="#">Support</a>
         </div>
     </footer>
 

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#f7f9fb",
+                      "on-surface": "#191c1e",
+                      "tertiary-fixed": "#7cf8d8",
+                      "primary-fixed-dim": "#ffb3ae",
+                      "surface-bright": "#f7f9fb",
+                      "inverse-primary": "#ffb3ae",
+                      "outline": "#8f706d",
+                      "inverse-surface": "#2d3133",
+                      "surface": "#f7f9fb",
+                      "on-tertiary-container": "#f4fff9",
+                      "on-error": "#ffffff",
+                      "on-tertiary-fixed-variant": "#005142",
+                      "tertiary-container": "#00846d",
+                      "secondary-fixed": "#ffdad7",
+                      "primary-fixed": "#ffdad7",
+                      "on-secondary-container": "#752222",
+                      "surface-tint": "#b81d27",
+                      "secondary": "#9e403d",
+                      "primary": "#b51925",
+                      "outline-variant": "#e3bebb",
+                      "on-surface-variant": "#5b403e",
+                      "tertiary": "#006856",
+                      "surface-container": "#eceef0",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#5ddbbc",
+                      "on-primary-fixed-variant": "#930015",
+                      "surface-dim": "#d8dadc",
+                      "surface-variant": "#e0e3e5",
+                      "inverse-on-surface": "#eff1f3",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#e6e8ea",
+                      "on-primary-container": "#fffbff",
+                      "on-tertiary-fixed": "#002019",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-primary-fixed": "#410004",
+                      "primary-container": "#d8363a",
+                      "on-background": "#191c1e",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed-dim": "#ffb3ae",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed-variant": "#7f2928",
+                      "error": "#ba1a1a",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-low": "#f2f4f6",
+                      "on-error-container": "#93000a",
+                      "secondary-container": "#fd8a84",
+                      "on-secondary-fixed": "#410004"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "1.5rem",
+                      "2xl": "2rem",
+                      "full": "9999px"
+              }
+            }
+          }
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-[#f7f9fb]/80 backdrop-blur-md sticky top-0 z-50 flex justify-between items-center w-full px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden">
+<img alt="Admin User Portrait" class="w-full h-full object-cover" data-alt="Professional portrait of a confident medical administrator in a modern office setting, soft clinical lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVXeWIKyYudOADzc6WRIiTIWzl9UwTwLf0OpbFufET6u8A2BhsimVeTtILythW9RMKYqz1mSHkVdG47TsmVFHqxOCEeADumRsz-3xBjT06TNJ57I4f6J8PI3dGIxaZ2xjT459TyNEi198rp3fz-7zx6Hb9FNlKdLIT3aW2OB_7un9uXdTv1LJvS8d9RoB0AUVXRrdGUpvl9TggbsBErWU-OIFnoIVpq4eVXyQS5ASq9VoXEuQYbbCYriVZRJSZp0leAmlx2ka9wFU"/>
+</div>
+<h1 class="text-xl font-extrabold text-red-600 tracking-tighter Inter">MediCare+</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-200/50 transition-colors duration-200 rounded-full active:scale-95 transition-all">
+<span class="material-symbols-outlined text-slate-900" data-icon="search">search</span>
+</button>
+</div>
+</header>
+<main class="px-6 py-8 max-w-2xl mx-auto space-y-10">
+<!-- Page Title -->
+<div class="space-y-1">
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">Settings</h2>
+<p class="text-on-surface-variant text-sm font-medium">Manage your clinical workstation and preferences</p>
+</div>
+<!-- Account Settings Section -->
+<section class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Account Settings</h3>
+<div class="bg-surface-container-lowest rounded-2xl p-6 space-y-6 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-20 h-20 rounded-2xl object-cover shadow-sm" data-alt="Close up of medical professional headshot, high-end editorial lighting, clean background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC91JSa0byFj5L27Gge9Blsb2zdGCUkGvLprn9mGBB3GrOOoPrK5rsvpra1yAm4yOQWk3FqQLB5Cu3FA7KWet83ksQBjkrXoGzG-6PM9AsufVVq4mN982tz0qaaWBc9mzB1Q4JoCrIXBMAGKTixHylzmrmHJCz46TRL4Fl9frI8gB7OgGloyb_b7aQGAaBEfxWVyal3Ge0WbBUhNXjVqnWfOiNo_jOlnqN5keJyDmbR84JrpJEBXa2tgN6svtaersX4PIcQ9WyBUmw"/>
+<button class="absolute -bottom-2 -right-2 bg-primary p-2 rounded-xl text-white shadow-lg active:scale-90 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+<div class="flex-1">
+<p class="text-lg font-bold">Dr. Admin</p>
+<p class="text-sm text-on-surface-variant">Chief of Medicine</p>
+<p class="text-xs text-on-surface-variant mt-1">admin@medicareplus.com</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl hover:bg-surface-container transition-colors group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="mail">mail</span>
+<div>
+<p class="text-sm font-bold">Email Address</p>
+<p class="text-xs text-on-surface-variant">admin@medicareplus.com</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl hover:bg-surface-container transition-colors group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="lock">lock</span>
+<div>
+<p class="text-sm font-bold">Change Password</p>
+<p class="text-xs text-on-surface-variant">Last updated 3 months ago</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Notification Preferences Section -->
+<section class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Notification Preferences</h3>
+<div class="bg-surface-container-lowest rounded-2xl p-2 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="notifications_active">notifications_active</span>
+</div>
+<span class="text-sm font-bold">Push Notifications</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-4 flex items-center justify-between bg-surface-container-low/30">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="alternate_email">alternate_email</span>
+</div>
+<span class="text-sm font-bold">Email Alerts</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="inventory">inventory</span>
+</div>
+<span class="text-sm font-bold">Inventory Reminders</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- System Configuration Section -->
+<section class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">System Configuration</h3>
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
+<div class="p-5 flex items-center justify-between border-b border-surface-variant/20">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="language">language</span>
+<span class="text-sm font-bold">Language</span>
+</div>
+<span class="text-xs font-bold text-primary flex items-center gap-1">English <span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span></span>
+</div>
+<div class="p-5 flex items-center justify-between border-b border-surface-variant/20">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="payments">payments</span>
+<span class="text-sm font-bold">Currency</span>
+</div>
+<span class="text-xs font-bold text-primary flex items-center gap-1">USD <span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span></span>
+</div>
+<div class="p-5 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="dark_mode">dark_mode</span>
+<span class="text-sm font-bold">Dark Mode</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Security Section -->
+<section class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Security</h3>
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)] space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-tertiary-fixed/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<p class="text-sm font-bold">Two-Factor Authentication</p>
+<p class="text-[10px] text-tertiary font-bold uppercase">Strongly Protected</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-tertiary/10 text-tertiary text-[10px] font-bold rounded-full">ON</span>
+</div>
+<button class="w-full py-4 rounded-xl bg-surface-container-low text-on-surface text-sm font-bold flex items-center justify-center gap-2 hover:bg-error/10 hover:text-error transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-180 transition-transform" data-icon="logout">logout</span>
+                    Logout from all sessions
+                </button>
+</div>
+</section>
+<!-- Danger Zone (Implicit extension for a detailed admin page) -->
+<section class="pt-4">
+<button class="w-full py-4 text-error font-extrabold text-sm border-2 border-error/10 rounded-xl hover:bg-error hover:text-white transition-all">
+                Deactivate Administrative Account
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-6 pt-2 bg-white shadow-[0_-10px_40px_-12px_rgba(25,28,30,0.06)] rounded-t-[1.5rem]">
+<a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 hover:text-red-500 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="text-[10px] font-medium uppercase Inter mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 hover:text-red-500 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-[10px] font-medium uppercase Inter mt-1">Patients</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-5 py-2 hover:text-red-500 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-[10px] font-medium uppercase Inter mt-1">Schedule</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-red-50 text-red-600 rounded-2xl px-5 py-2 scale-90 duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-medium uppercase Inter mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

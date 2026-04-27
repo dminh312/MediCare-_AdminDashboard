@@ -2,14 +2,14 @@ const { db } = require('../models/firebase');
 
 exports.getStats = async (req, res) => {
     try {
-        // Total Patients and Monthly Registrations
-        let totalPatients = 0;
+        // Total Users and Monthly Registrations
+        let totalUsers = 0;
         let monthlyRegistrations = new Array(12).fill(0);
         let weeklyRegistrations = new Array(7).fill(0);
         try {
-            const patientsSnap = await db.collection('users').where('role', '==', 'user').get();
-            if (patientsSnap.size > 0) {
-                totalPatients = patientsSnap.size;
+            const usersSnap = await db.collection('users').where('role', '==', 'user').get();
+            if (usersSnap.size > 0) {
+                totalUsers = usersSnap.size;
             }
             
 
@@ -23,7 +23,7 @@ exports.getStats = async (req, res) => {
             const endOfWeek = new Date(startOfWeek);
             endOfWeek.setDate(startOfWeek.getDate() + 7);
 
-            patientsSnap.forEach(doc => {
+            usersSnap.forEach(doc => {
                 const data = doc.data();
                 if (data.createdAt) {
                     let date;
@@ -42,7 +42,7 @@ exports.getStats = async (req, res) => {
                 }
             });
         } catch (e) {
-            console.warn("Failed to get patients", e);
+            console.warn("Failed to get users", e);
         }
 
         // Staff stats & distribution
@@ -80,7 +80,7 @@ exports.getStats = async (req, res) => {
         res.json({
             success: true,
             stats: {
-                totalPatients,
+                totalUsers,
                 staffOnline: totalStaff, // or whatever real online metric you want
                 totalStaff: totalStaff,
                 activeChats,

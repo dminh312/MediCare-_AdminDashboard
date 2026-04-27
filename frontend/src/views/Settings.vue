@@ -1,0 +1,251 @@
+<template>
+<div class="min-h-screen bg-background text-on-surface">
+    <!-- TopAppBar -->
+    <header class="bg-[#f7f9fb]/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 flex justify-between items-center w-full px-6 py-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full overflow-hidden bg-slate-200">
+                <img alt="Admin User Portrait" class="w-full h-full object-cover" data-alt="Admin avatar" :src="currentUser?.photoURL || 'https://lh3.googleusercontent.com/aida-public/AB6AXuBVXeWIKyYudOADzc6WRIiTIWzl9UwTwLf0OpbFufET6u8A2BhsimVeTtILythW9RMKYqz1mSHkVdG47TsmVFHqxOCEeADumRsz-3xBjT06TNJ57I4f6J8PI3dGIxaZ2xjT459TyNEi198rp3fz-7zx6Hb9FNlKdLIT3aW2OB_7un9uXdTv1LJvS8d9RoB0AUVXRrdGUpvl9TggbsBErWU-OIFnoIVpq4eVXyQS5ASq9VoXEuQYbbCYriVZRJSZp0leAmlx2ka9wFU'"/>
+            </div>
+            <h1 class="text-xl font-extrabold text-primary tracking-tighter Inter">MediCare+</h1>
+        </div>
+                <div class="relative w-full max-w-md hidden sm:block">
+                    <!-- Space reserved for header content if needed -->
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button @click="$router.push('/dashboard')" class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">
+                    Back to Dashboard
+                </button>
+            </div>
+        </header>
+
+        <main class="px-6 py-8 max-w-2xl mx-auto space-y-10">
+            <!-- Page Title -->
+            <div class="space-y-1">
+                <h2 class="text-3xl font-extrabold tracking-tight text-on-surface">Settings</h2>
+                <p class="text-on-surface-variant text-sm font-medium">Manage your clinical workstation and preferences</p>
+            </div>
+
+            <!-- Account Settings Section -->
+            <section class="space-y-4">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Account Settings</h3>
+                <div class="bg-surface-container-lowest rounded-2xl p-6 space-y-6 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <input type="file" ref="fileInput" @change="onFileChange" accept="image/*" class="hidden" />
+                            <img class="w-20 h-20 rounded-2xl object-cover shadow-sm bg-slate-100" data-alt="Admin user avatar" :src="currentUser?.photoURL || 'https://lh3.googleusercontent.com/aida-public/AB6AXuC91JSa0byFj5L27Gge9Blsb2zdGCUkGvLprn9mGBB3GrOOoPrK5rsvpra1yAm4yOQWk3FqQLB5Cu3FA7KWet83ksQBjkrXoGzG-6PM9AsufVVq4mN982tz0qaaWBc9mzB1Q4JoCrIXBMAGKTixHylzmrmHJCz46TRL4Fl9frI8gB7OgGloyb_b7aQGAaBEfxWVyal3Ge0WbBUhNXjVqnWfOiNo_jOlnqN5keJyDmbR84JrpJEBXa2tgN6svtaersX4PIcQ9WyBUmw'"/>
+                            <button @click="triggerFileInput" :disabled="isUploading" class="absolute -bottom-2 -right-2 bg-primary p-2 rounded-xl text-white shadow-lg hover:scale-105 active:scale-95 disabled:opacity-50 transition-all flex items-center justify-center">
+                                <span v-if="isUploading" class="material-symbols-outlined text-sm animate-spin" data-icon="sync">sync</span>
+                                <span v-else class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+                            </button>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-lg font-bold">{{ currentUser?.fullName || currentUser?.displayName || 'Dr. Admin' }}</p>
+                            <p class="text-sm text-on-surface-variant uppercase tracking-wider text-[10px]">{{ currentUser?.role || 'Administrator' }}</p>
+                            <p class="text-xs text-on-surface-variant mt-1">{{ currentUser?.email || 'admin@medicareplus.com' }}</p>
+                        </div>
+                    </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl hover:bg-surface-container transition-colors group">
+                        <div class="flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary" data-icon="mail">mail</span>
+                            <div>
+                                <p class="text-sm font-bold">Email Address</p>
+                                <p class="text-xs text-on-surface-variant">admin@medicareplus.com</p>
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl hover:bg-surface-container transition-colors group">
+                        <div class="flex items-center gap-4">
+                            <span class="material-symbols-outlined text-primary" data-icon="lock">lock</span>
+                            <div>
+                                <p class="text-sm font-bold">Change Password</p>
+                                <p class="text-xs text-on-surface-variant">Last updated 3 months ago</p>
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notification Preferences Section -->
+        <section class="space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Notification Preferences</h3>
+            <div class="bg-surface-container-lowest rounded-2xl p-2 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
+                <div class="p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary" data-icon="notifications_active">notifications_active</span>
+                        </div>
+                        <span class="text-sm font-bold">Push Notifications</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input checked class="sr-only peer" type="checkbox"/>
+                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+                <div class="p-4 flex items-center justify-between bg-surface-container-low/30">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary" data-icon="alternate_email">alternate_email</span>
+                        </div>
+                        <span class="text-sm font-bold">Email Alerts</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input checked class="sr-only peer" type="checkbox"/>
+                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary" data-icon="inventory">inventory</span>
+                        </div>
+                        <span class="text-sm font-bold">Inventory Reminders</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input class="sr-only peer" type="checkbox"/>
+                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Configuration Section -->
+        <section class="space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">System Configuration</h3>
+            <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
+                <div class="p-5 flex items-center justify-between border-b border-surface-variant/20">
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-on-surface-variant" data-icon="language">language</span>
+                        <span class="text-sm font-bold">Language</span>
+                    </div>
+                    <span class="text-xs font-bold text-primary flex items-center gap-1">English <span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span></span>
+                </div>
+                <div class="p-5 flex items-center justify-between border-b border-surface-variant/20">
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-on-surface-variant" data-icon="payments">payments</span>
+                        <span class="text-sm font-bold">Currency</span>
+                    </div>
+                    <span class="text-xs font-bold text-primary flex items-center gap-1">USD <span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span></span>
+                </div>
+                <div class="p-5 flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-on-surface-variant" data-icon="dark_mode">dark_mode</span>
+                        <span class="text-sm font-bold">Dark Mode</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input class="sr-only peer" type="checkbox"/>
+                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section class="space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Security</h3>
+            <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)] space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-tertiary-fixed/30 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-tertiary" data-icon="verified_user">verified_user</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold">Two-Factor Authentication</p>
+                            <p class="text-[10px] text-tertiary font-bold uppercase">Strongly Protected</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-[10px] font-bold rounded-full">ON</span>
+                </div>
+                <button @click="logout" class="w-full py-4 rounded-xl bg-surface-container-low text-on-surface text-sm font-bold flex items-center justify-center gap-2 hover:bg-error/10 hover:text-error transition-all group">
+                    <span class="material-symbols-outlined group-hover:rotate-180 transition-transform" data-icon="logout">logout</span>
+                    Logout from all sessions
+                </button>
+            </div>
+        </section>
+    </main>
+</div>
+</template>
+
+<script>
+import { storage } from '../firebase';
+import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+
+export default {
+    name: 'Settings',
+    data() {
+        return {
+            currentUser: null,
+            isUploading: false
+        }
+    },
+    created() {
+        const userStr = localStorage.getItem('medicare_admin_user');
+        if (userStr) {
+            try {
+                this.currentUser = JSON.parse(userStr);
+            } catch(e) {}
+        }
+    },
+    methods: {
+        logout() {
+            localStorage.removeItem('medicare_admin_token');
+            localStorage.removeItem('medicare_admin_user');
+            this.$router.push('/login');
+        },
+        triggerFileInput() {
+            this.$refs.fileInput.click();
+        },
+        async onFileChange(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            this.isUploading = true;
+            try {
+                // Upload to Firebase Storage
+                const uid = this.currentUser?.uid || 'unknown';
+                const fileExt = file.name.split('.').pop();
+                const fileName = `staff_avatars/${uid}_${Date.now()}.${fileExt}`;
+                const fileRef = storageRef(storage, fileName);
+
+                await uploadBytes(fileRef, file);
+                const downloadURL = await getDownloadURL(fileRef);
+
+                // Update local state
+                this.currentUser = {
+                    ...this.currentUser,
+                    photoURL: downloadURL
+                };
+                localStorage.setItem('medicare_admin_user', JSON.stringify(this.currentUser));
+
+                // Update backend via API
+                const token = localStorage.getItem('medicare_admin_token');
+                if (token && this.currentUser.uid) {
+                    await fetch(`/api/staff/${this.currentUser.uid}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ photoURL: downloadURL })
+                    });
+                }
+                
+                alert('Profile picture updated successfully!');
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                alert('Failed to update profile picture. Please try again.');
+            } finally {
+                this.isUploading = false;
+                // Reset input
+                if (this.$refs.fileInput) {
+                    this.$refs.fileInput.value = '';
+                }
+            }
+        }
+    }
+}
+</script>

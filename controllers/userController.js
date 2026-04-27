@@ -9,7 +9,7 @@ exports.getUsers = async (req, res) => {
             let status = 'Active'; 
             users.push({ 
                 id: doc.id,
-                name: data.fullName || data.name || data.displayName || 'Unknown Patient',
+                name: data.fullName || data.name || data.displayName || 'Unknown User',
                 email: data.email || 'No email',
                 role: 'User',
                 status: status,

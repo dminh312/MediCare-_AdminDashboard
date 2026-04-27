@@ -52,7 +52,7 @@
 
 
           
-          <router-link to="/chat" v-if="hasRole(['Customer Service', 'HR'])"
+          <router-link to="/chat" v-if="hasRole(['Customer Service'])"
              class="flex items-center justify-between px-4 py-3 rounded-lg overflow-hidden transition-all duration-200"
              :class="[$route.path.startsWith('/chat') ? 'bg-white dark:bg-slate-900 border border-red-900/5 dark:border-red-500/10 shadow-sm text-[#ff5252]' : 'text-slate-500 hover:bg-white dark:bg-slate-900 hover:text-[#ff5252]']">
               <div class="flex items-center gap-3">
@@ -63,10 +63,19 @@
                          <span class="relative inline-flex rounded-full h-3 w-3 bg-red-50 dark:bg-red-900/300"></span>
                      </span>
                  </div>
-                 <transition name="fade-text">
+                  <transition name="fade-text">
                     <span v-if="!isCollapsed" class="whitespace-nowrap">User Chats</span>
                  </transition>
               </div>
+          </router-link>
+
+          <router-link to="/settings"
+             class="flex items-center gap-3 px-4 py-3 rounded-lg overflow-hidden transition-all duration-200"
+             :class="[$route.path.startsWith('/settings') ? 'bg-white dark:bg-slate-900 border border-red-900/5 dark:border-red-500/10 shadow-sm text-[#ff5252]' : 'text-slate-500 hover:bg-white dark:bg-slate-900 hover:text-[#ff5252]']">
+              <span class="material-symbols-outlined flex-shrink-0" :class="{ 'pulse-active': $route.path.startsWith('/settings')}">settings</span>
+              <transition name="fade-text">
+                 <span v-if="!isCollapsed" class="whitespace-nowrap">Settings</span>
+              </transition>
           </router-link>
       </nav>
 

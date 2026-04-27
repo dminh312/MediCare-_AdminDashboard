@@ -6,6 +6,7 @@ import Staff from '../views/Staff.vue';
 import AddStaff from '../views/AddStaff.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
 import UserManagement from '../views/UserManagement.vue';
+import Settings from '../views/Settings.vue';
 
 Vue.use(VueRouter);
 
@@ -20,7 +21,8 @@ const routes = [
   { path: '/staff/add', component: AddStaff, meta: { roles: ['Admin', 'HR'] } },
   { path: '/users', component: UserManagement, meta: { roles: ['Admin', 'HR'] } },
   { path: '/medicine/add', component: () => import('../views/AddMedicine.vue'), meta: { roles: ['Admin', 'Medicine management'] } },
-  { path: '/chat', component: LivechatSupport, meta: { roles: ['Admin', 'HR', 'Customer Service'] } },
+  { path: '/chat', component: LivechatSupport, meta: { roles: ['Admin', 'Customer Service'] } },
+  { path: '/settings', component: Settings, meta: { roles: ['Admin', 'HR', 'Medicine management', 'Customer Service'] } },
 ];
 
 const router = new VueRouter({

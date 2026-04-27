@@ -9,7 +9,7 @@
 
                 <div class="relative w-full max-w-md">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-400 text-sm">search</span>
-                    <input class="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-red-500/20 transition-all placeholder:text-zinc-500 dark:text-zinc-400 dark:text-zinc-400" placeholder="Search patients, staff, or records..." type="text"/>
+                    <input class="w-full bg-zinc-100 dark:bg-zinc-900 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-red-500/20 transition-all placeholder:text-zinc-500 dark:text-zinc-400 dark:text-zinc-400" placeholder="Search users, staff, or records..." type="text"/>
                 </div>
             </div>
             <div class="flex items-center gap-6">
@@ -24,10 +24,10 @@
                 </div>
                 <div class="flex items-center gap-3 pl-6 border-l border-zinc-200 dark:border-zinc-800">
                     <div class="text-right hidden sm:block">
-                        <p class="text-xs font-bold text-on-surface dark:text-slate-100">{{ currentUser?.email || 'Dr. Sarah Pulse' }}</p>
-                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400 dark:text-zinc-400 font-medium">Chief Administrator</p>
+                        <p class="text-xs font-bold text-on-surface dark:text-slate-100">{{ currentUser?.fullName || currentUser?.displayName || currentUser?.email || 'Dr. Admin' }}</p>
+                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400 dark:text-zinc-400 font-medium uppercase tracking-wider">{{ currentUser?.role || 'Administrator' }}</p>
                     </div>
-                    <img alt="Admin profile photo" class="w-10 h-10 rounded-full border-2 border-red-500/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0hHfXa7Mc3nZzGflZHS61ycPlnBGYmCIRHzCcEXGIEHj9Ua-8ai557R-54bow5Lr7ExyiE5V_Rtc44_PuP6uZr6-hcoTpi-C4LHECtuGlSS79-P5y3TvBg1kpVODOmpAdkOkklwf2Ab7iwv4Rj4VZuoI0NL58Trdp3rOwPLWr8Vktfq3Tzee2jY8QI0yfY2HbmiZucHy1y-S7Q8uai4UpkoIN4KDBcUCZS5v2RUQu1YeOterK_x7ZYBax4rOQcUpfRmbK0w8fU34"/>
+                    <img alt="Admin profile photo" class="w-10 h-10 rounded-full border-2 border-red-500/20 object-cover" :src="currentUser?.photoURL || 'https://lh3.googleusercontent.com/aida-public/AB6AXuB0hHfXa7Mc3nZzGflZHS61ycPlnBGYmCIRHzCcEXGIEHj9Ua-8ai557R-54bow5Lr7ExyiE5V_Rtc44_PuP6uZr6-hcoTpi-C4LHECtuGlSS79-P5y3TvBg1kpVODOmpAdkOkklwf2Ab7iwv4Rj4VZuoI0NL58Trdp3rOwPLWr8Vktfq3Tzee2jY8QI0yfY2HbmiZucHy1y-S7Q8uai4UpkoIN4KDBcUCZS5v2RUQu1YeOterK_x7ZYBax4rOQcUpfRmbK0w8fU34'"/>
                 </div>
             </div>
         </header>
@@ -43,8 +43,8 @@
                         </div>
                         <span class="text-[10px] font-bold text-green-600 bg-green-50 dark:bg-green-900/30 dark:bg-green-900/30 px-2 py-1 rounded-full">+12.5%</span>
                     </div>
-                    <h3 class="text-zinc-500 dark:text-zinc-400 dark:text-zinc-400 text-[11px] font-bold uppercase tracking-widest">Total Patients</h3>
-                    <p class="text-2xl font-black text-on-surface dark:text-slate-100 tracking-tight mt-1">{{ isLoading ? '...' : (stats.totalPatients || 0).toLocaleString() }}</p>
+                    <h3 class="text-zinc-500 dark:text-zinc-400 dark:text-zinc-400 text-[11px] font-bold uppercase tracking-widest">Total Users</h3>
+                    <p class="text-2xl font-black text-on-surface dark:text-slate-100 tracking-tight mt-1">{{ isLoading ? '...' : (stats.totalUsers || 0).toLocaleString() }}</p>
                 </div>
 
                 <div class="bg-surface-container-lowest dark:bg-slate-900 p-6 rounded-2xl shadow-sm shadow-red-500/5 border border-red-500/5 dark:border-red-500/10 hover:shadow-md transition-shadow opacity-0 animate-slide-up-fade" style="animation-delay: 0.2s">
@@ -144,7 +144,7 @@ export default {
             return {
                 currentUser: null,
                 stats: {
-                    totalPatients: 0,
+                    totalUsers: 0,
                     totalStaff: 0,
                     staffOnline: 0,
                     activeChats: 0,
