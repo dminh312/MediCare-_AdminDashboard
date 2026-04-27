@@ -1,7 +1,7 @@
 <template>
 <div class="min-h-screen bg-background text-on-surface">
     <!-- TopAppBar -->
-    <header class="bg-[#f7f9fb]/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 flex justify-end items-center w-full px-6 py-4">
+    <header class="bg-[#f7f9fb]/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-40 flex justify-end items-center w-full px-6 py-4">
         <button @click="$router.push('/dashboard')" class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">
             Back to Dashboard
         </button>
