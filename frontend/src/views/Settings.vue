@@ -1,22 +1,11 @@
 <template>
 <div class="min-h-screen bg-background text-on-surface">
     <!-- TopAppBar -->
-    <header class="bg-[#f7f9fb]/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 flex justify-between items-center w-full px-6 py-4">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full overflow-hidden bg-slate-200">
-                <img alt="Admin User Portrait" class="w-full h-full object-cover" data-alt="Admin avatar" :src="(currentUser && currentUser.photoURL) || 'https://lh3.googleusercontent.com/aida-public/AB6AXuBVXeWIKyYudOADzc6WRIiTIWzl9UwTwLf0OpbFufET6u8A2BhsimVeTtILythW9RMKYqz1mSHkVdG47TsmVFHqxOCEeADumRsz-3xBjT06TNJ57I4f6J8PI3dGIxaZ2xjT459TyNEi198rp3fz-7zx6Hb9FNlKdLIT3aW2OB_7un9uXdTv1LJvS8d9RoB0AUVXRrdGUpvl9TggbsBErWU-OIFnoIVpq4eVXyQS5ASq9VoXEuQYbbCYriVZRJSZp0leAmlx2ka9wFU'"/>
-            </div>
-            <h1 class="text-xl font-extrabold text-primary tracking-tighter Inter">MediCare+</h1>
-        </div>
-                <div class="relative w-full max-w-md hidden sm:block">
-                    <!-- Space reserved for header content if needed -->
-                </div>
-            <div class="flex items-center gap-4">
-                <button @click="$router.push('/dashboard')" class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">
-                    Back to Dashboard
-                </button>
-            </div>
-        </header>
+    <header class="bg-[#f7f9fb]/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 flex justify-end items-center w-full px-6 py-4">
+        <button @click="$router.push('/dashboard')" class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">
+            Back to Dashboard
+        </button>
+    </header>
 
         <main class="px-6 py-8 max-w-2xl mx-auto space-y-10">
             <!-- Page Title -->
@@ -32,7 +21,7 @@
                     <div class="flex items-center gap-4">
                         <div class="relative">
                             <input type="file" ref="fileInput" @change="onFileChange" accept="image/*" class="hidden" />
-                            <img class="w-20 h-20 rounded-2xl object-cover shadow-sm bg-slate-100" data-alt="Admin user avatar" :src="(currentUser && currentUser.photoURL) || 'https://lh3.googleusercontent.com/aida-public/AB6AXuC91JSa0byFj5L27Gge9Blsb2zdGCUkGvLprn9mGBB3GrOOoPrK5rsvpra1yAm4yOQWk3FqQLB5Cu3FA7KWet83ksQBjkrXoGzG-6PM9AsufVVq4mN982tz0qaaWBc9mzB1Q4JoCrIXBMAGKTixHylzmrmHJCz46TRL4Fl9frI8gB7OgGloyb_b7aQGAaBEfxWVyal3Ge0WbBUhNXjVqnWfOiNo_jOlnqN5keJyDmbR84JrpJEBXa2tgN6svtaersX4PIcQ9WyBUmw'"/>
+                            <img class="w-20 h-20 rounded-2xl object-cover shadow-sm bg-slate-100" data-alt="Admin user avatar" :src="(currentUser && currentUser.photoURL) || 'https://ui-avatars.com/api/?name=Admin&background=FF5252&color=fff&bold=true'"/>
                             <button @click="triggerFileInput" :disabled="isUploading" class="absolute -bottom-2 -right-2 bg-primary p-2 rounded-xl text-white shadow-lg hover:scale-105 active:scale-95 disabled:opacity-50 transition-all flex items-center justify-center">
                                 <span v-if="isUploading" class="material-symbols-outlined text-sm animate-spin" data-icon="sync">sync</span>
                                 <span v-else class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
