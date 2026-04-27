@@ -24,10 +24,10 @@
                 </div>
                 <div class="flex items-center gap-3 pl-6 border-l border-zinc-200 dark:border-zinc-800">
                     <div class="text-right hidden sm:block">
-                        <p class="text-xs font-bold text-on-surface dark:text-slate-100">{{ currentUser?.fullName || currentUser?.displayName || currentUser?.email || 'Dr. Admin' }}</p>
-                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400 dark:text-zinc-400 font-medium uppercase tracking-wider">{{ currentUser?.role || 'Administrator' }}</p>
+                        <p class="text-xs font-bold text-on-surface dark:text-slate-100">{{ (currentUser && (currentUser.fullName || currentUser.displayName || currentUser.email)) || 'Dr. Admin' }}</p>
+                        <p class="text-[10px] text-zinc-500 dark:text-zinc-400 dark:text-zinc-400 font-medium uppercase tracking-wider">{{ (currentUser && currentUser.role) || 'Administrator' }}</p>
                     </div>
-                    <img alt="Admin profile photo" class="w-10 h-10 rounded-full border-2 border-red-500/20 object-cover" :src="currentUser?.photoURL || 'https://lh3.googleusercontent.com/aida-public/AB6AXuB0hHfXa7Mc3nZzGflZHS61ycPlnBGYmCIRHzCcEXGIEHj9Ua-8ai557R-54bow5Lr7ExyiE5V_Rtc44_PuP6uZr6-hcoTpi-C4LHECtuGlSS79-P5y3TvBg1kpVODOmpAdkOkklwf2Ab7iwv4Rj4VZuoI0NL58Trdp3rOwPLWr8Vktfq3Tzee2jY8QI0yfY2HbmiZucHy1y-S7Q8uai4UpkoIN4KDBcUCZS5v2RUQu1YeOterK_x7ZYBax4rOQcUpfRmbK0w8fU34'"/>
+                    <img alt="Admin profile photo" class="w-10 h-10 rounded-full border-2 border-red-500/20 object-cover" :src="(currentUser && currentUser.photoURL) || 'https://lh3.googleusercontent.com/aida-public/AB6AXuB0hHfXa7Mc3nZzGflZHS61ycPlnBGYmCIRHzCcEXGIEHj9Ua-8ai557R-54bow5Lr7ExyiE5V_Rtc44_PuP6uZr6-hcoTpi-C4LHECtuGlSS79-P5y3TvBg1kpVODOmpAdkOkklwf2Ab7iwv4Rj4VZuoI0NL58Trdp3rOwPLWr8Vktfq3Tzee2jY8QI0yfY2HbmiZucHy1y-S7Q8uai4UpkoIN4KDBcUCZS5v2RUQu1YeOterK_x7ZYBax4rOQcUpfRmbK0w8fU34'"/>
                 </div>
             </div>
         </header>
