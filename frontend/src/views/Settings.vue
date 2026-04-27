@@ -44,12 +44,12 @@
                         </div>
                         <span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
                     </div>
-                    <div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl hover:bg-surface-container transition-colors group">
+                    <div @click="resetPassword" class="cursor-pointer flex items-center justify-between p-4 bg-surface-container-low rounded-xl hover:bg-surface-container transition-colors group">
                         <div class="flex items-center gap-4">
                             <span class="material-symbols-outlined text-primary" data-icon="lock">lock</span>
                             <div>
                                 <p class="text-sm font-bold">Change Password</p>
-                                <p class="text-xs text-on-surface-variant">Last updated 3 months ago</p>
+                                <p class="text-xs text-on-surface-variant">Send a password reset email</p>
                             </div>
                         </div>
                         <span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
@@ -70,7 +70,7 @@
                         <span class="text-sm font-bold">Push Notifications</span>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
-                        <input checked class="sr-only peer" type="checkbox"/>
+                        <input type="checkbox" v-model="preferences.pushNotifications" class="sr-only peer"/>
                         <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
@@ -82,7 +82,7 @@
                         <span class="text-sm font-bold">Email Alerts</span>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
-                        <input checked class="sr-only peer" type="checkbox"/>
+                        <input type="checkbox" v-model="preferences.emailAlerts" class="sr-only peer"/>
                         <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
@@ -94,7 +94,7 @@
                         <span class="text-sm font-bold">Inventory Reminders</span>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
-                        <input class="sr-only peer" type="checkbox"/>
+                        <input type="checkbox" v-model="preferences.inventoryReminders" class="sr-only peer"/>
                         <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
@@ -105,27 +105,13 @@
         <section class="space-y-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">System Configuration</h3>
             <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
-                <div class="p-5 flex items-center justify-between border-b border-surface-variant/20">
-                    <div class="flex items-center gap-4">
-                        <span class="material-symbols-outlined text-on-surface-variant" data-icon="language">language</span>
-                        <span class="text-sm font-bold">Language</span>
-                    </div>
-                    <span class="text-xs font-bold text-primary flex items-center gap-1">English <span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span></span>
-                </div>
-                <div class="p-5 flex items-center justify-between border-b border-surface-variant/20">
-                    <div class="flex items-center gap-4">
-                        <span class="material-symbols-outlined text-on-surface-variant" data-icon="payments">payments</span>
-                        <span class="text-sm font-bold">Currency</span>
-                    </div>
-                    <span class="text-xs font-bold text-primary flex items-center gap-1">USD <span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span></span>
-                </div>
                 <div class="p-5 flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <span class="material-symbols-outlined text-on-surface-variant" data-icon="dark_mode">dark_mode</span>
                         <span class="text-sm font-bold">Dark Mode</span>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
-                        <input class="sr-only peer" type="checkbox"/>
+                        <input type="checkbox" v-model="isDarkMode" class="sr-only peer"/>
                         <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
@@ -143,10 +129,13 @@
                         </div>
                         <div>
                             <p class="text-sm font-bold">Two-Factor Authentication</p>
-                            <p class="text-[10px] text-tertiary font-bold uppercase">Strongly Protected</p>
+                            <p class="text-[10px] text-tertiary font-bold uppercase">{{ preferences.twoFactor ? 'Strongly Protected' : 'Recommended' }}</p>
                         </div>
                     </div>
-                    <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-[10px] font-bold rounded-full">ON</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" v-model="preferences.twoFactor" class="sr-only peer"/>
+                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
                 </div>
                 <button @click="logout" class="w-full py-4 rounded-xl bg-surface-container-low text-on-surface text-sm font-bold flex items-center justify-center gap-2 hover:bg-error/10 hover:text-error transition-all group">
                     <span class="material-symbols-outlined group-hover:rotate-180 transition-transform" data-icon="logout">logout</span>
@@ -167,7 +156,31 @@ export default {
     data() {
         return {
             currentUser: null,
-            isUploading: false
+            isUploading: false,
+            preferences: {
+                pushNotifications: true,
+                emailAlerts: true,
+                inventoryReminders: false,
+                twoFactor: true
+            }
+        }
+    },
+    computed: {
+        isDarkMode: {
+            get() {
+                return this.$store.state.theme === 'dark';
+            },
+            set(value) {
+                this.$store.dispatch('setTheme', value ? 'dark' : 'light');
+            }
+        }
+    },
+    watch: {
+        preferences: {
+            deep: true,
+            handler(newVal) {
+                localStorage.setItem('medicare_admin_prefs', JSON.stringify(newVal));
+            }
         }
     },
     created() {
@@ -177,8 +190,27 @@ export default {
                 this.currentUser = JSON.parse(userStr);
             } catch(e) {}
         }
+        
+        const prefStr = localStorage.getItem('medicare_admin_prefs');
+        if (prefStr) {
+            try {
+                this.preferences = { ...this.preferences, ...JSON.parse(prefStr) };
+            } catch(e) {}
+        }
     },
     methods: {
+        async resetPassword() {
+            if (!this.currentUser || !this.currentUser.email) return;
+            try {
+                const { getAuth, sendPasswordResetEmail } = await import('firebase/auth');
+                const auth = getAuth();
+                await sendPasswordResetEmail(auth, this.currentUser.email);
+                alert(`Password reset email sent to ${this.currentUser.email}`);
+            } catch (error) {
+                console.error('Password reset error:', error);
+                alert('Failed to send password reset email.');
+            }
+        },
         logout() {
             localStorage.removeItem('medicare_admin_token');
             localStorage.removeItem('medicare_admin_user');
