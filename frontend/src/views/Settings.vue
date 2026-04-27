@@ -86,18 +86,7 @@
                         <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
-                <div class="p-4 flex items-center justify-between">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary" data-icon="inventory">inventory</span>
-                        </div>
-                        <span class="text-sm font-bold">Inventory Reminders</span>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" v-model="preferences.inventoryReminders" class="sr-only peer"/>
-                        <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                    </label>
-                </div>
+
             </div>
         </section>
 
@@ -122,21 +111,7 @@
         <section class="space-y-4">
             <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 px-1">Security</h3>
             <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)] space-y-6">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-tertiary-fixed/30 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-tertiary" data-icon="verified_user">verified_user</span>
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold">Two-Factor Authentication</p>
-                            <p class="text-[10px] text-tertiary font-bold uppercase">{{ preferences.twoFactor ? 'Strongly Protected' : 'Recommended' }}</p>
-                        </div>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" v-model="preferences.twoFactor" class="sr-only peer"/>
-                        <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                    </label>
-                </div>
+
                 <button @click="logout" class="w-full py-4 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-50 text-sm font-bold flex items-center justify-center gap-2 hover:bg-error/10 hover:text-error transition-all group">
                     <span class="material-symbols-outlined group-hover:rotate-180 transition-transform" data-icon="logout">logout</span>
                     Logout from all sessions
@@ -159,9 +134,7 @@ export default {
             isUploading: false,
             preferences: {
                 pushNotifications: true,
-                emailAlerts: true,
-                inventoryReminders: false,
-                twoFactor: true
+                emailAlerts: true
             }
         }
     },
