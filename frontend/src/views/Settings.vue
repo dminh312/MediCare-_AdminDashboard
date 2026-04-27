@@ -1,8 +1,8 @@
 <template>
-<div class="min-h-screen bg-background text-on-surface">
+<div class="min-h-screen text-slate-900 dark:text-slate-50">
     <!-- TopAppBar -->
-    <header class="bg-[#f7f9fb]/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-40 flex justify-end items-center w-full px-6 py-4">
-        <button @click="$router.push('/dashboard')" class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">
+    <header class="bg-white/80 dark:bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 flex justify-end items-center w-full px-6 py-4">
+        <button @click="$router.push('/dashboard')" class="text-sm font-bold text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">
             Back to Dashboard
         </button>
     </header>
@@ -10,14 +10,14 @@
         <main class="px-6 py-8 max-w-2xl mx-auto space-y-10">
             <!-- Page Title -->
             <div class="space-y-1">
-                <h2 class="text-3xl font-extrabold tracking-tight text-on-surface">Settings</h2>
-                <p class="text-on-surface-variant text-sm font-medium">Manage your clinical workstation and preferences</p>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">Settings</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Manage your clinical workstation and preferences</p>
             </div>
 
             <!-- Account Settings Section -->
             <section class="space-y-4">
-                <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Account Settings</h3>
-                <div class="bg-surface-container-lowest rounded-2xl p-6 space-y-6 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 px-1">Account Settings</h3>
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 space-y-6 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
                     <div class="flex items-center gap-4">
                         <div class="relative">
                             <input type="file" ref="fileInput" @change="onFileChange" accept="image/*" class="hidden" />
@@ -29,30 +29,30 @@
                         </div>
                         <div class="flex-1">
                             <p class="text-lg font-bold">{{ (currentUser && (currentUser.fullName || currentUser.displayName)) || 'Dr. Admin' }}</p>
-                            <p class="text-sm text-on-surface-variant uppercase tracking-wider text-[10px]">{{ (currentUser && currentUser.role) || 'Administrator' }}</p>
-                            <p class="text-xs text-on-surface-variant mt-1">{{ (currentUser && currentUser.email) || 'admin@medicareplus.com' }}</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 uppercase tracking-wider text-[10px]">{{ (currentUser && currentUser.role) || 'Administrator' }}</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ (currentUser && currentUser.email) || 'admin@medicareplus.com' }}</p>
                         </div>
                     </div>
                 <div class="space-y-4">
-                    <div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl hover:bg-surface-container transition-colors group">
+                    <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-xl hover:bg-slate-100 dark:bg-slate-700 transition-colors group">
                         <div class="flex items-center gap-4">
                             <span class="material-symbols-outlined text-primary" data-icon="mail">mail</span>
                             <div>
                                 <p class="text-sm font-bold">Email Address</p>
-                                <p class="text-xs text-on-surface-variant">admin@medicareplus.com</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">admin@medicareplus.com</p>
                             </div>
                         </div>
-                        <span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+                        <span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
                     </div>
-                    <div @click="resetPassword" class="cursor-pointer flex items-center justify-between p-4 bg-surface-container-low rounded-xl hover:bg-surface-container transition-colors group">
+                    <div @click="resetPassword" class="cursor-pointer flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-xl hover:bg-slate-100 dark:bg-slate-700 transition-colors group">
                         <div class="flex items-center gap-4">
                             <span class="material-symbols-outlined text-primary" data-icon="lock">lock</span>
                             <div>
                                 <p class="text-sm font-bold">Change Password</p>
-                                <p class="text-xs text-on-surface-variant">Send a password reset email</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Send a password reset email</p>
                             </div>
                         </div>
-                        <span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+                        <span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
                     </div>
                 </div>
             </div>
@@ -60,8 +60,8 @@
 
         <!-- Notification Preferences Section -->
         <section class="space-y-4">
-            <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Notification Preferences</h3>
-            <div class="bg-surface-container-lowest rounded-2xl p-2 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 px-1">Notification Preferences</h3>
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-2 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
                 <div class="p-4 flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -71,10 +71,10 @@
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" v-model="preferences.pushNotifications" class="sr-only peer"/>
-                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
-                <div class="p-4 flex items-center justify-between bg-surface-container-low/30">
+                <div class="p-4 flex items-center justify-between bg-slate-50 dark:bg-slate-800/30">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                             <span class="material-symbols-outlined text-primary" data-icon="alternate_email">alternate_email</span>
@@ -83,7 +83,7 @@
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" v-model="preferences.emailAlerts" class="sr-only peer"/>
-                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
                 <div class="p-4 flex items-center justify-between">
@@ -95,7 +95,7 @@
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" v-model="preferences.inventoryReminders" class="sr-only peer"/>
-                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
             </div>
@@ -103,16 +103,16 @@
 
         <!-- System Configuration Section -->
         <section class="space-y-4">
-            <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">System Configuration</h3>
-            <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 px-1">System Configuration</h3>
+            <div class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)]">
                 <div class="p-5 flex items-center justify-between">
                     <div class="flex items-center gap-4">
-                        <span class="material-symbols-outlined text-on-surface-variant" data-icon="dark_mode">dark_mode</span>
+                        <span class="material-symbols-outlined text-slate-500 dark:text-slate-400" data-icon="dark_mode">dark_mode</span>
                         <span class="text-sm font-bold">Dark Mode</span>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" v-model="isDarkMode" class="sr-only peer"/>
-                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
             </div>
@@ -120,8 +120,8 @@
 
         <!-- Security Section -->
         <section class="space-y-4">
-            <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Security</h3>
-            <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)] space-y-6">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 px-1">Security</h3>
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-[0_20px_40px_-12px_rgba(25,28,30,0.06)] space-y-6">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-2xl bg-tertiary-fixed/30 flex items-center justify-center">
@@ -134,10 +134,10 @@
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" v-model="preferences.twoFactor" class="sr-only peer"/>
-                        <div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                     </label>
                 </div>
-                <button @click="logout" class="w-full py-4 rounded-xl bg-surface-container-low text-on-surface text-sm font-bold flex items-center justify-center gap-2 hover:bg-error/10 hover:text-error transition-all group">
+                <button @click="logout" class="w-full py-4 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-50 text-sm font-bold flex items-center justify-center gap-2 hover:bg-error/10 hover:text-error transition-all group">
                     <span class="material-symbols-outlined group-hover:rotate-180 transition-transform" data-icon="logout">logout</span>
                     Logout from all sessions
                 </button>
